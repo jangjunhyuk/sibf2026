@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+<title>2026 서울국제도서전 부스 배치도</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+:root{
+  /* depth — near-black immersive dark */
+  --bg:#121212;        /* Level 0 page background */
+  --surface:#181818;   /* Level 1 cards / sidebar */
+  --surface2:#1f1f1f;  /* interactive surfaces, inputs */
+  --card:#252525;      /* elevated card */
+  --card2:#2a2a2a;     /* chips, badges */
+  /* text */
+  --text:#ffffff;
+  --text2:#b3b3b3;     /* silver — secondary */
+  --text3:#7c7c7c;     /* dim — muted */
+  --border:#4d4d4d;
+  /* brand — functional only */
+  --green:#1ed760;
+  --green2:#1db954;
+  /* semantic */
+  --neg:#f3727f; --warn:#ffa42b; --info:#539df5;
+  /* floor-plan category content colours */
+  --cat-ex:#a7a7a7;   /* 전시 */
+  --cat-lec:#efc22a;  /* 강연·홀 */
+  --cat-vil:#52bee6;  /* 책마을 */
+  --cat-evt:#f47a20;  /* 이벤트 */
+  --cat-cafe:#9486c4; /* 카페 */
+  /* elevation */
+  --sh-card:rgba(0,0,0,.3) 0px 8px 8px;
+  --sh-dialog:rgba(0,0,0,.5) 0px 8px 24px;
+  --font:"Pretendard","Helvetica Neue",helvetica,arial,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --safe-b:env(safe-area-inset-bottom,0px);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{margin:0;padding:0;height:100%;}
+body{
+  font-family:var(--font);
+  background:#000;
+  color:var(--text);
+  overscroll-behavior:none;
+  -webkit-font-smoothing:antialiased;
+}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+input{font-family:inherit;}
+
+#app{position:relative;z-index:1;display:flex;flex-direction:column;height:100dvh;max-width:520px;margin:0 auto;background:var(--bg);box-shadow:0 0 60px rgba(0,0,0,.7);}
+
+/* ---------- header ---------- */
+header{padding:16px 16px 0;background:var(--bg);position:relative;}
+.brand{display:flex;align-items:center;gap:10px;}
+.brand .mark{width:13px;height:13px;border-radius:50%;background:var(--green);flex:0 0 auto;box-shadow:0 0 12px rgba(30,215,96,.5);}
+.brand .kr{font-weight:700;font-size:22px;line-height:1.1;letter-spacing:-.4px;color:var(--text);}
+.brand .yr{font-weight:700;font-size:13px;color:var(--green);letter-spacing:.5px;margin-left:2px;}
+.brand .sub{font-size:10px;color:var(--text2);letter-spacing:2px;margin-top:4px;text-transform:uppercase;font-weight:600;}
+
+/* segmented toggle — Spotify selected-pill */
+.seg{display:flex;margin-top:16px;background:var(--surface2);border-radius:9999px;padding:4px;position:relative;}
+.seg button{flex:1;padding:9px 0;font-size:13px;font-weight:700;color:var(--text2);border-radius:9999px;position:relative;z-index:2;transition:color .2s;display:flex;align-items:center;justify-content:center;gap:7px;letter-spacing:.3px;}
+.seg button.on{color:#000;}
+.seg .pill{position:absolute;top:4px;bottom:4px;width:calc(50% - 4px);background:var(--text);border-radius:9999px;z-index:1;transition:transform .28s cubic-bezier(.4,1.1,.4,1);box-shadow:0 2px 8px rgba(0,0,0,.4);}
+.seg.map .pill{transform:translateX(100%);}
+.seg svg{width:15px;height:15px;}
+
+/* search — pill input, inset border */
+.searchwrap{padding:14px 16px 10px;}
+.search{display:flex;align-items:center;gap:10px;background:var(--surface2);border-radius:9999px;padding:0 18px;height:48px;box-shadow:inset 0 0 0 1px transparent;transition:box-shadow .2s;}
+.search:focus-within{box-shadow:inset 0 0 0 1px var(--text);}
+.search svg{width:18px;height:18px;color:var(--text2);flex:0 0 auto;}
+.search input{flex:1;border:none;background:none;outline:none;font-size:15px;color:var(--text);min-width:0;font-weight:500;}
+.search input::placeholder{color:var(--text2);}
+.search input[type=search]::-webkit-search-cancel-button,
+.search input[type=search]::-webkit-search-decoration{-webkit-appearance:none;appearance:none;display:none;}
+.search .clr{font-size:18px;color:var(--text2);width:26px;height:26px;border-radius:50%;display:none;align-items:center;justify-content:center;}
+.search.has .clr{display:flex;}
+.search .clr:active{background:var(--card2);}
+
+/* filter chips — pills */
+.chips{display:flex;gap:8px;padding:0 16px 12px;overflow-x:auto;scrollbar-width:none;}
+.chips::-webkit-scrollbar{display:none;}
+.chip{flex:0 0 auto;font-size:12px;font-weight:700;padding:8px 14px;border-radius:9999px;background:var(--card2);color:var(--text);white-space:nowrap;transition:background .18s,color .18s,transform .1s;display:flex;align-items:center;gap:6px;letter-spacing:.2px;}
+.chip:active{transform:scale(.96);}
+.chip.on{background:var(--text);color:#000;}
+.chip .star{font-size:12px;color:var(--green);}
+.chip.on .star{color:var(--green2);}
+.countsum{font-size:11px;color:var(--text2);padding:0 16px 8px;letter-spacing:.3px;font-weight:600;}
+
+/* ---------- list ---------- */
+.scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+#listView{padding:0 0 28px;}
+.grouphd{position:sticky;top:0;z-index:5;background:linear-gradient(var(--bg) 72%,rgba(18,18,18,0));padding:16px 16px 8px;font-weight:700;font-size:13px;color:var(--text);display:flex;align-items:baseline;gap:8px;text-transform:uppercase;letter-spacing:1.6px;}
+.grouphd .n{font-size:11px;color:var(--text2);font-weight:700;letter-spacing:.5px;}
+.row{display:flex;align-items:center;gap:12px;padding:11px 16px;border-bottom:1px solid rgba(255,255,255,.05);transition:background .15s;}
+.row:active{background:var(--surface2);}
+.row .info{flex:1;min-width:0;}
+.row .nm{font-size:16px;font-weight:700;line-height:1.25;color:var(--text);}
+.row .nm mark{background:rgba(30,215,96,.32);color:var(--text);border-radius:3px;padding:0 1px;}
+.row .meta{font-size:12px;color:var(--text2);margin-top:3px;display:flex;align-items:center;gap:7px;flex-wrap:wrap;line-height:1.3;font-weight:500;}
+.row .en{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:62%;}
+.flag{font-size:10px;font-weight:700;letter-spacing:.6px;color:var(--text2);background:var(--card2);padding:2px 8px;border-radius:9999px;text-transform:uppercase;}
+.booth{font-size:11px;font-weight:700;color:var(--text);background:var(--surface2);padding:6px 11px;border-radius:9999px;flex:0 0 auto;letter-spacing:.4px;}
+.booth:active{background:var(--card2);}
+.star-btn{flex:0 0 auto;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:50%;font-size:19px;color:var(--text2);transition:transform .15s,color .15s;}
+.star-btn.on{color:var(--green);}
+.star-btn:active{transform:scale(1.25);}
+
+.empty{text-align:center;padding:72px 30px;color:var(--text2);}
+.empty .big{font-size:18px;font-weight:700;color:var(--text);margin-bottom:8px;}
+.empty .sm{font-size:13px;line-height:1.6;}
+
+/* ---------- map ---------- */
+#mapView{flex:1;display:none;flex-direction:column;position:relative;overflow:hidden;background:var(--bg);}
+#mapView.show{display:flex;}
+#listScroll.hide{display:none;}
+.mapstage{flex:1;overflow:hidden;position:relative;touch-action:none;cursor:grab;background:var(--bg);}
+.mapstage:active{cursor:grabbing;}
+.mapcanvas{position:absolute;top:0;left:0;width:720px;transform-origin:0 0;will-change:transform;}
+.hall{margin:0;padding:16px;}
+.hall-title{font-weight:700;font-size:22px;color:var(--text);margin:6px 2px 14px;display:flex;align-items:center;gap:10px;text-transform:uppercase;letter-spacing:1.5px;}
+.hall-title .dot{width:6px;height:22px;background:var(--green);border-radius:9999px;box-shadow:0 0 10px rgba(30,215,96,.5);}
+.fp-row{display:flex;gap:10px;margin-bottom:10px;align-items:stretch;}
+.blk{background:var(--surface);border-radius:8px;padding:9px;flex:1;min-width:0;box-shadow:var(--sh-card);}
+.blk-hd{font-size:11px;font-weight:700;color:var(--text2);margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;gap:4px;letter-spacing:.3px;}
+.blk-hd .cnt{font-size:9px;color:var(--text2);background:var(--card2);border-radius:9999px;padding:2px 7px;font-weight:700;}
+.cells{display:grid;grid-template-columns:repeat(auto-fill,minmax(46px,1fr));gap:5px;}
+.cell{aspect-ratio:1.15;border-radius:6px;background:var(--card2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:2px;position:relative;transition:transform .12s,box-shadow .12s,background .15s;}
+.cell:active{transform:scale(.92);}
+.cell .id{font-size:10px;font-weight:700;color:var(--text);line-height:1;letter-spacing:.2px;}
+.cell .nm{font-size:7.5px;color:var(--text2);line-height:1.05;text-align:center;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:500;}
+.cell .fstar{position:absolute;top:1px;right:2px;font-size:8px;color:var(--green);}
+.cell.multi::after{content:attr(data-c);position:absolute;bottom:1px;left:3px;font-size:7px;color:var(--text3);font-weight:700;}
+.cell.hit{background:rgba(30,215,96,.16);box-shadow:0 0 0 2px var(--green);z-index:2;}
+.cell.hit .id{color:var(--green);}
+.cell.sel{background:var(--green)!important;box-shadow:0 0 0 3px rgba(30,215,96,.3)!important;z-index:3;}
+.cell.sel .id,.cell.sel .nm,.cell.sel.multi::after{color:#000!important;}
+.cell.sel .fstar{color:#000;}
+/* category fills (content colour, tuned for dark) */
+.cell.cat-vil{background:rgba(82,190,230,.16);box-shadow:inset 0 0 0 1px rgba(82,190,230,.45);}
+.cell.cat-vil .id{color:var(--cat-vil);}
+.cell.cat-lec{background:rgba(239,194,42,.16);box-shadow:inset 0 0 0 1px rgba(239,194,42,.45);}
+.cell.cat-lec .id{color:var(--cat-lec);}
+.cell.cat-cafe{background:rgba(148,134,196,.18);box-shadow:inset 0 0 0 1px rgba(148,134,196,.45);}
+.cell.cat-cafe .id{color:var(--cat-cafe);}
+.cell.cat-ex{background:rgba(167,167,167,.14);box-shadow:inset 0 0 0 1px rgba(167,167,167,.4);}
+.cell.cat-evt{background:rgba(244,122,32,.16);box-shadow:inset 0 0 0 1px rgba(244,122,32,.45);}
+.blk.village{flex:1.4;}
+.blk.village .cells{grid-template-columns:1fr;}
+.blk.village .cell{aspect-ratio:auto;min-height:96px;}
+.blk.single{flex:.85;}
+.blk.single .cells{grid-template-columns:1fr;}
+.blk.single .cell{aspect-ratio:auto;min-height:56px;}
+.blk.info{flex:.5;}
+.blk.info .cell{aspect-ratio:auto;min-height:44px;}
+.blk-hd .lbl{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;}
+
+/* gates / entrances — neutral surface, green wayfinding arrow */
+.gate{font-size:10px;color:var(--text2);text-align:center;border-radius:8px;padding:8px 6px;background:var(--surface2);font-weight:700;letter-spacing:.4px;display:flex;align-items:center;justify-content:center;gap:6px;}
+.gate .arr{color:var(--green);font-size:13px;}
+.fp-split{display:flex;gap:10px;align-items:stretch;margin-bottom:10px;}
+.fp-main{flex:1;min-width:0;display:flex;flex-direction:column;}
+.fp-main>.fp-row{margin-bottom:10px;}
+.fp-main>.fp-row:last-child{margin-bottom:0;}
+.fp-gate-v{flex:0 0 62px;border-radius:8px;background:rgba(30,215,96,.08);box-shadow:inset 0 0 0 1px rgba(30,215,96,.35);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:5px;
+  font-size:11px;font-weight:700;color:var(--text);letter-spacing:.3px;line-height:1.35;padding:10px 4px;}
+.fp-gate-v .en{display:block;font-size:8px;font-weight:600;color:var(--text2);margin-top:2px;letter-spacing:.2px;}
+.fp-gate-v .arr{font-size:16px;color:var(--green);margin-top:4px;}
+.fp-spacer{flex:1;}
+.gate-exit,.gate-enter{flex:2;background:rgba(30,215,96,.08);box-shadow:inset 0 0 0 1px rgba(30,215,96,.35);color:var(--text);}
+
+/* map controls — circular */
+.mapctl{position:absolute;right:14px;bottom:calc(16px + var(--safe-b));display:flex;flex-direction:column;gap:9px;z-index:20;}
+.mapctl button{width:44px;height:44px;border-radius:50%;background:var(--surface2);box-shadow:var(--sh-dialog);display:flex;align-items:center;justify-content:center;font-size:21px;font-weight:700;color:var(--text);}
+.mapctl button:active{background:var(--card);}
+.mapctl .reset{font-size:15px;}
+
+/* legend — dark card */
+.legend{position:absolute;left:14px;bottom:calc(16px + var(--safe-b));z-index:20;background:var(--surface);border-radius:10px;box-shadow:var(--sh-dialog);padding:10px 12px;display:flex;flex-direction:column;gap:6px;max-width:140px;}
+.legend .lg{display:flex;align-items:center;gap:7px;font-size:10.5px;color:var(--text2);font-weight:500;}
+.legend .sw{width:11px;height:11px;border-radius:3px;flex:0 0 auto;}
+.legend.collapsed .lg{display:none;}
+.legend .lhd{font-size:10px;font-weight:700;color:var(--text);display:flex;align-items:center;justify-content:space-between;cursor:pointer;text-transform:uppercase;letter-spacing:1px;gap:8px;}
+
+/* map search hint — pill */
+.maphint{position:absolute;top:12px;left:50%;transform:translateX(-50%);z-index:18;font-size:11px;color:var(--text);background:var(--surface);border-radius:9999px;padding:7px 15px;box-shadow:var(--sh-dialog);font-weight:700;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;letter-spacing:.3px;}
+.maphint.show{opacity:1;}
+
+/* ---------- bottom sheet ---------- */
+.sheet-bg{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:40;opacity:0;pointer-events:none;transition:opacity .25s;backdrop-filter:blur(3px);}
+.sheet-bg.show{opacity:1;pointer-events:auto;}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:41;max-width:520px;margin:0 auto;background:var(--surface);border-radius:16px 16px 0 0;box-shadow:var(--sh-dialog);transform:translateY(100%);transition:transform .3s cubic-bezier(.3,1,.4,1);max-height:78dvh;display:flex;flex-direction:column;padding-bottom:var(--safe-b);}
+.sheet.show{transform:translateY(0);}
+.sheet .grab{width:38px;height:4px;background:var(--border);border-radius:9999px;margin:10px auto 4px;flex:0 0 auto;}
+.sheet-hd{padding:8px 20px 14px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:12px;flex:0 0 auto;}
+.sheet-hd .bcode{font-weight:700;font-size:15px;color:#000;background:var(--green);padding:9px 14px;border-radius:9999px;letter-spacing:.4px;flex:0 0 auto;}
+.sheet-hd .bttl{flex:1;min-width:0;}
+.sheet-hd .bttl .t{font-weight:700;font-size:18px;line-height:1.2;color:var(--text);}
+.sheet-hd .bttl .s{font-size:12px;color:var(--text2);margin-top:3px;font-weight:500;}
+.sheet-hd .close{width:34px;height:34px;border-radius:50%;background:var(--card2);display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--text2);flex:0 0 auto;}
+.sheet-hd .close:active{background:var(--card);}
+.sheet-act{padding:12px 20px 6px;flex:0 0 auto;}
+.sheet.from-map .sheet-act{display:none;}
+.locate-btn{width:100%;height:44px;border-radius:9999px;background:var(--green);color:#000;font-size:14px;font-weight:700;letter-spacing:.3px;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 14px rgba(30,215,96,.25);transition:transform .12s,background .15s;}
+.locate-btn svg{width:17px;height:17px;}
+.locate-btn:active{transform:scale(.98);background:var(--green2);}
+/* zone mini-map inside map-context modal */
+.zone{padding:14px 20px 4px;}
+.zhd{font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.zhd b{text-transform:none;letter-spacing:0;color:var(--text);font-size:12.5px;font-weight:700;}
+.zmap{display:flex;flex-direction:column;gap:5px;background:var(--bg);border-radius:10px;padding:9px;}
+.zrow{display:flex;gap:5px;}
+.ztile{flex:1;min-width:0;height:27px;border-radius:5px;background:var(--card2);color:var(--text2);font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 3px;letter-spacing:.2px;}
+.ztile.me{background:var(--green);color:#000;box-shadow:0 0 0 2px rgba(30,215,96,.35);}
+.zcap{font-size:9px;color:var(--text3);text-align:center;margin-top:7px;letter-spacing:.3px;font-weight:600;}
+.zcap .arr{color:var(--green);}
+.zstrip-hd{font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:1px;margin:14px 0 8px;display:flex;align-items:center;gap:7px;}
+.zstrip-hd .zhint{text-transform:none;letter-spacing:.2px;font-size:9px;color:#000;background:var(--green);padding:2px 7px;border-radius:9999px;}
+.zgrid{display:grid;gap:6px;}
+.zb-empty{visibility:hidden;}
+.zstrip{display:flex;flex-wrap:wrap;gap:6px;}
+.zb{font-size:11px;font-weight:700;padding:7px 4px;border-radius:9px;background:var(--surface2);color:var(--text);letter-spacing:.2px;transition:transform .1s;text-align:center;min-width:0;}
+.zstrip .zb{border-radius:9999px;padding:7px 11px;}
+.zb.sel{background:var(--green);color:#000;}
+.zb:active{transform:scale(.95);}
+.zone-div{height:1px;background:rgba(255,255,255,.07);margin:14px 20px 0;}
+.sheet-body{overflow-y:auto;padding:6px 0 16px;}
+.srow{display:flex;align-items:center;gap:11px;padding:12px 20px;border-bottom:1px solid rgba(255,255,255,.05);}
+.srow:last-child{border-bottom:none;}
+.srow .info{flex:1;min-width:0;}
+.srow .nm{font-size:15px;font-weight:700;line-height:1.25;color:var(--text);}
+.srow .en{font-size:12px;color:var(--text2);margin-top:3px;line-height:1.3;word-break:break-word;font-weight:500;}
+.srow .star-btn{font-size:21px;}
+
+@media (max-width:380px){
+  .cells{grid-template-columns:repeat(auto-fill,minmax(40px,1fr));}
+  .brand .kr{font-size:20px;}
+}
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="brand">
+      <span class="mark"></span>
+      <div>
+        <div class="kr">서울국제도서전 <span class="yr">2026</span></div>
+        <div class="sub">Seoul Int'l Book Fair · 부스 배치도</div>
+      </div>
+    </div>
+    <div class="seg" id="seg">
+      <span class="pill"></span>
+      <button data-view="list" class="on" id="segList">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" stroke-linecap="round"/></svg>목록
+      </button>
+      <button data-view="map" id="segMap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3 3 6v15l6-3 6 3 6-3V3l-6 3-6-3Zm0 0v15m6-12v15" stroke-linejoin="round" stroke-linecap="round"/></svg>지도
+      </button>
+    </div>
+    <div class="searchwrap">
+      <div class="search" id="searchBox">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3" stroke-linecap="round"/></svg>
+        <input id="searchInput" type="search" placeholder="출판사 · 부스번호 · 국가 검색" autocomplete="off" enterkeyhint="search">
+        <button class="clr" id="searchClear" aria-label="지우기">×</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- LIST -->
+  <div class="chips" id="chips"></div>
+  <div class="countsum" id="countSum"></div>
+  <div class="scroll" id="listScroll">
+    <div id="listView"></div>
+  </div>
+
+  <!-- MAP -->
+  <div id="mapView">
+    <div class="maphint" id="mapHint"></div>
+    <div class="mapstage" id="mapStage">
+      <div class="mapcanvas" id="mapCanvas"></div>
+    </div>
+    <div class="legend" id="legend">
+      <div class="lhd" id="legendHd"><span>범례 Legend</span><span class="tg" id="legendTg">▾</span></div>
+      <div class="lg"><span class="sw" style="background:var(--cat-vil)"></span>책마을 Book Village</div>
+      <div class="lg"><span class="sw" style="background:var(--cat-lec)"></span>강연·홀 Lecture</div>
+      <div class="lg"><span class="sw" style="background:var(--cat-cafe)"></span>카페 Cafe</div>
+      <div class="lg"><span class="sw" style="background:var(--cat-ex)"></span>전시 Exhibition</div>
+      <div class="lg"><span class="sw" style="background:var(--green)"></span>검색 결과</div>
+    </div>
+    <div class="mapctl">
+      <button id="zoomIn" aria-label="확대">+</button>
+      <button id="zoomOut" aria-label="축소">−</button>
+      <button id="zoomReset" class="reset" aria-label="전체보기">⤢</button>
+    </div>
+  </div>
+</div>
+
+<!-- SHEET -->
+<div class="sheet-bg" id="sheetBg"></div>
+<div class="sheet" id="sheet">
+  <div class="grab"></div>
+  <div class="sheet-hd">
+    <span class="bcode" id="sheetCode"></span>
+    <div class="bttl"><div class="t" id="sheetTitle"></div><div class="s" id="sheetSub"></div></div>
+    <button class="close" id="sheetClose">×</button>
+  </div>
+  <div class="sheet-act" id="sheetAct">
+    <button class="locate-btn" id="sheetLocate">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11Z" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.4"/></svg>
+      지도에서 보기
+    </button>
+  </div>
+  <div class="sheet-body" id="sheetBody"></div>
+</div>
+
+<script>
+const RAW = [{"no":1,"booth":"A1001","ko":"주식회사 돌베개","en":"dolbegae","ck":"","ce":"","sp":0,"ob":""},{"no":2,"booth":"A1001","ko":"평산책방","en":"pyeongsanbooks","ck":"","ce":"","sp":0,"ob":""},{"no":3,"booth":"A1002","ko":"재단법인 아모레퍼시픽재단","en":"Amorepacific Foundation","ck":"","ce":"","sp":0,"ob":""},{"no":4,"booth":"A101","ko":"고스트북스","en":"Ghost Books","ck":"","ce":"","sp":0,"ob":""},{"no":5,"booth":"A102","ko":"별빛들","en":"BYEOL BIT DEUL","ck":"","ce":"","sp":0,"ob":""},{"no":6,"booth":"A103","ko":"도서출판부카","en":"bookaa","ck":"","ce":"","sp":0,"ob":""},{"no":7,"booth":"A104","ko":"봄봄출판사","en":"Bombom Publishing Co.","ck":"","ce":"","sp":0,"ob":""},{"no":8,"booth":"A105","ko":"단추 출판사","en":"Danchu Press","ck":"","ce":"","sp":0,"ob":""},{"no":9,"booth":"A106","ko":"밝은세상","en":"Balgunsesang","ck":"","ce":"","sp":0,"ob":""},{"no":10,"booth":"A107","ko":"애플트리테일즈","en":"appletreetales","ck":"","ce":"","sp":0,"ob":""},{"no":11,"booth":"A108","ko":"곰세마리","en":"Gomsemari","ck":"","ce":"","sp":0,"ob":""},{"no":12,"booth":"A108","ko":"도서출판 달리","en":"Dahli Children's Books","ck":"","ce":"","sp":0,"ob":""},{"no":13,"booth":"A109","ko":"핀드","en":"Pinned","ck":"","ce":"","sp":0,"ob":""},{"no":14,"booth":"A110","ko":"소동출판사","en":"Sodong Publishing House","ck":"","ce":"","sp":0,"ob":""},{"no":15,"booth":"A1101","ko":"민음사 출판그룹","en":"Minumsa Publishing Group","ck":"","ce":"","sp":0,"ob":""},{"no":16,"booth":"A1102","ko":"인플루엔셜","en":"Influential","ck":"","ce":"","sp":0,"ob":""},{"no":17,"booth":"A1102","ko":"윌라","en":"Welaaa","ck":"","ce":"","sp":0,"ob":""},{"no":18,"booth":"A1102","ko":"윌라스토리","en":"WelaaaStory","ck":"","ce":"","sp":0,"ob":""},{"no":19,"booth":"A1103","ko":"서울특별시 서울도서관","en":"Seoul Metropolitan Library","ck":"","ce":"","sp":0,"ob":""},{"no":20,"booth":"A1103","ko":"신한은행","en":"Shinhan Bank","ck":"","ce":"","sp":0,"ob":""},{"no":21,"booth":"A111","ko":"시사북스(빈페이지)","en":"SISABOOKS(emptypage)","ck":"","ce":"","sp":0,"ob":""},{"no":22,"booth":"A112","ko":"한국출판마케팅연구소","en":"KOREA PUBLISH MARKETING","ck":"","ce":"","sp":0,"ob":""},{"no":23,"booth":"A113","ko":"일러스트레이터스 월","en":"Illustrators Wall","ck":"","ce":"","sp":1,"ob":""},{"no":24,"booth":"A1201","ko":"타이완콘텐츠진흥원","en":"TAICCA","ck":"타이완","ce":"Taiwan","sp":0,"ob":""},{"no":25,"booth":"A1201","ko":"","en":"CommonWealth Education Media and Publishing Co., Ltd.","ck":"타이완","ce":"Taiwan","sp":0,"ob":""},{"no":26,"booth":"A1201","ko":"","en":"DUMPLING CAT FAMILY","ck":"타이완","ce":"Taiwan","sp":0,"ob":""},{"no":27,"booth":"A1201","ko":"","en":"Hakka Affairs Council","ck":"타이완","ce":"Taiwan","sp":0,"ob":""},{"no":28,"booth":"A1201","ko":"","en":"JS Agency Co., Ltd.","ck":"타이완","ce":"Taiwan","sp":0,"ob":""},{"no":29,"booth":"A1201","ko":"","en":"KAWAII HYOKA / Caiji Art","ck":"타이완","ce":"Taiwan","sp":0,"ob":""},{"no":30,"booth":"A1201","ko":"","en":"Kuroro space exploration team / memes creative partnership co., ltd.","ck":"타이완","ce":"Taiwan","sp":0,"ob":""},{"no":31,"booth":"A1201","ko":"","en":"REVE BOOKS LTD., CO","ck":"타이완","ce":"Taiwan","sp":0,"ob":""},{"no":32,"booth":"A1201","ko":"","en":"Rye Field Publications, a division of Cite Publishing Ltd.","ck":"타이완","ce":"Taiwan","sp":0,"ob":""},{"no":33,"booth":"A1201","ko":"","en":"SpringHill Publishing","ck":"타이완","ce":"Taiwan","sp":0,"ob":""},{"no":34,"booth":"A1201","ko":"타코쿠마","en":"TAKOKUMA / Sunthingood Co., Ltd.","ck":"타이완","ce":"Taiwan","sp":0,"ob":""},{"no":35,"booth":"A1201","ko":"","en":"THE GRAYHAWK AGENCY","ck":"타이완","ce":"Taiwan","sp":0,"ob":""},{"no":36,"booth":"A1202","ko":"주한태국대사관 상무공사관실","en":"OFFICE OF COMMERCIAL AFFAIRS, ROYAL THAI EMBASSY, DITP","ck":"태국","ce":"Thailand","sp":0,"ob":""},{"no":37,"booth":"A1202","ko":"","en":"Amarin Corporations PCL","ck":"태국","ce":"Thailand","sp":0,"ob":""},{"no":38,"booth":"A1202","ko":"","en":"BANLUE PUBLICATIONS COMPANY LIMITED","ck":"태국","ce":"Thailand","sp":0,"ob":""},{"no":39,"booth":"A1202","ko":"","en":"Channasoot Publishing","ck":"태국","ce":"Thailand","sp":0,"ob":""},{"no":40,"booth":"A1202","ko":"","en":"Combang Publishing House Limited Partnership","ck":"태국","ce":"Thailand","sp":0,"ob":""},{"no":41,"booth":"A1202","ko":"","en":"DEXPRESS COMPANY LIMITED","ck":"태국","ce":"Thailand","sp":0,"ob":""},{"no":42,"booth":"A1202","ko":"","en":"Avocado Books (Earlgrey co.,ltd)","ck":"태국","ce":"Thailand","sp":0,"ob":""},{"no":43,"booth":"A1202","ko":"","en":"Glory Forever Public Company Limited","ck":"태국","ce":"Thailand","sp":0,"ob":""},{"no":44,"booth":"A1202","ko":"","en":"Golden C Creative contentCo.,Ltd.","ck":"태국","ce":"Thailand","sp":0,"ob":""},{"no":45,"booth":"A1202","ko":"","en":"HAPPYME-D CO., LTD.","ck":"태국","ce":"Thailand","sp":0,"ob":""},{"no":46,"booth":"A1202","ko":"","en":"Liatris publishing","ck":"태국","ce":"Thailand","sp":0,"ob":""},{"no":47,"booth":"A1202","ko":"","en":"MITMAKME Group","ck":"태국","ce":"Thailand","sp":0,"ob":""},{"no":48,"booth":"A1202","ko":"모카그룹","en":"Mocca Group","ck":"태국","ce":"Thailand","sp":0,"ob":""},{"no":49,"booth":"A1202","ko":"유기적 링크","en":"ORGANIC LINKS CO., LTD.","ck":"태국","ce":"Thailand","sp":0,"ob":""},{"no":50,"booth":"A1202","ko":"","en":"Silkwormbooks","ck":"태국","ce":"Thailand","sp":0,"ob":""},{"no":51,"booth":"A1202","ko":"라이터 소울 태국","en":"Writer Soul Thailand Corporation Ltd","ck":"태국","ce":"Thailand","sp":0,"ob":""},{"no":52,"booth":"A1203","ko":"","en":"EC Publishing LLC","ck":"미국","ce":"USA","sp":0,"ob":""},{"no":53,"booth":"A1204","ko":"","en":"Studio of Books LLC","ck":"미국","ce":"USA","sp":0,"ob":""},{"no":54,"booth":"A1205","ko":"퀴퍼 프린츠","en":"Quipper Prints","ck":"미국","ce":"USA","sp":0,"ob":""},{"no":55,"booth":"A1206","ko":"프로칠레","en":"PROCHILE","ck":"칠레","ce":"Chile","sp":0,"ob":""},{"no":56,"booth":"A1206","ko":"","en":"Calcetines Animados","ck":"칠레","ce":"Chile","sp":0,"ob":""},{"no":57,"booth":"A1206","ko":"","en":"VLP Agency","ck":"칠레","ce":"Chile","sp":0,"ob":""},{"no":58,"booth":"A1206","ko":"","en":"Recrea Libros","ck":"칠레","ce":"Chile","sp":0,"ob":""},{"no":59,"booth":"A1207","ko":"연변교육출판사","en":"Yanbian Education Press","ck":"중국","ce":"China","sp":0,"ob":""},{"no":60,"booth":"A1207","ko":"연변인민출판사","en":"Yanbian People's Press","ck":"중국","ce":"China","sp":0,"ob":""},{"no":61,"booth":"A1207","ko":"연변대학출판사","en":"Yanbian University Press","ck":"중국","ce":"China","sp":0,"ob":""},{"no":62,"booth":"A1301","ko":"엣눈북스","en":"ATNOONBOOKS","ck":"","ce":"","sp":0,"ob":""},{"no":63,"booth":"A1302","ko":"서사원 주식회사","en":"SEOSAWON","ck":"","ce":"","sp":0,"ob":""},{"no":64,"booth":"A1303","ko":"프란츠","en":"Franz","ck":"","ce":"","sp":0,"ob":""},{"no":65,"booth":"A1304","ko":"귤프레스","en":"guulpress","ck":"","ce":"","sp":0,"ob":""},{"no":66,"booth":"A1305","ko":"고요한소리","en":"Calm Voice Society","ck":"","ce":"","sp":0,"ob":""},{"no":67,"booth":"A1306","ko":"쿵프레스","en":"Koong Press","ck":"","ce":"","sp":0,"ob":""},{"no":68,"booth":"A1307","ko":"한림출판사","en":"HOLLYM CORP, PUBLISHERS","ck":"","ce":"","sp":0,"ob":""},{"no":69,"booth":"A1308","ko":"소장각","en":"Sojanggak","ck":"","ce":"","sp":0,"ob":""},{"no":70,"booth":"A1308","ko":"비플랫폼","en":"B-PLATFORM","ck":"","ce":"","sp":0,"ob":""},{"no":71,"booth":"A1309","ko":"(주)불광미디어","en":"BULKWANG MEDIA","ck":"","ce":"","sp":0,"ob":""},{"no":72,"booth":"A1310","ko":"라의눈주식회사","en":"Eye of Ra","ck":"","ce":"","sp":0,"ob":""},{"no":73,"booth":"A1311","ko":"유어마인드","en":"YOURMIND","ck":"","ce":"","sp":0,"ob":""},{"no":74,"booth":"A1401","ko":"이룸아이","en":"ErumI Publishing Co.","ck":"","ce":"","sp":0,"ob":""},{"no":75,"booth":"A1402","ko":"펜타클","en":"pentacle","ck":"","ce":"","sp":0,"ob":""},{"no":76,"booth":"A1403","ko":"마음모자","en":"Maummoja","ck":"","ce":"","sp":0,"ob":""},{"no":77,"booth":"A1404","ko":"스토리보울","en":"STORYBOWL","ck":"","ce":"","sp":0,"ob":""},{"no":78,"booth":"A1405","ko":"몽당연필","en":"mongdangpencil","ck":"","ce":"","sp":0,"ob":""},{"no":79,"booth":"A1405","ko":"구름이머무는동안","en":"Cloud Stays Books","ck":"","ce":"","sp":0,"ob":""},{"no":80,"booth":"A1405","ko":"뜰힘","en":"DDEULHIM","ck":"","ce":"","sp":0,"ob":""},{"no":81,"booth":"A1405","ko":"소유","en":"SOYOU BOOKS","ck":"","ce":"","sp":0,"ob":""},{"no":82,"booth":"A1405","ko":"아르카","en":"ARCA","ck":"","ce":"","sp":0,"ob":""},{"no":83,"booth":"A1405","ko":"지우","en":"Jiwoo Publisher","ck":"","ce":"","sp":0,"ob":""},{"no":84,"booth":"A1406","ko":"(사)한국기독교출판협회","en":"KCPA","ck":"","ce":"","sp":0,"ob":""},{"no":85,"booth":"A1406","ko":"도서출판 CUP","en":"CUP (Christian University Press)","ck":"","ce":"","sp":0,"ob":""},{"no":86,"booth":"A1406","ko":"도서출판 동연","en":"DongYeon press","ck":"","ce":"","sp":0,"ob":""},{"no":87,"booth":"A1406","ko":"문광서원","en":"Mungwangbooks","ck":"","ce":"","sp":0,"ob":""},{"no":88,"booth":"A1406","ko":"바이블네비게이션(주)","en":"Biblenavigation Inc.","ck":"","ce":"","sp":0,"ob":""},{"no":89,"booth":"A1406","ko":"블리스","en":"BLISS","ck":"","ce":"","sp":0,"ob":""},{"no":90,"booth":"A1406","ko":"쿰란출판사","en":"Qumran Publishing House","ck":"","ce":"","sp":0,"ob":""},{"no":91,"booth":"A1406","ko":"템북","en":"TEMBOOK","ck":"","ce":"","sp":0,"ob":""},{"no":92,"booth":"A1407","ko":"아작","en":"ARZAK","ck":"","ce":"","sp":0,"ob":""},{"no":93,"booth":"A1408","ko":"(주)이퍼블릭 코리아","en":"tiramisu the book, safari","ck":"","ce":"","sp":0,"ob":""},{"no":94,"booth":"A1409","ko":"도서출판 키다리","en":"Kidari Publishing Co.","ck":"","ce":"","sp":0,"ob":""},{"no":95,"booth":"A1410","ko":"에디토리얼","en":"Editorial Publishing Co.","ck":"","ce":"","sp":0,"ob":""},{"no":96,"booth":"A1410","ko":"가지출판사","en":"Kindsbook Publishing Company","ck":"","ce":"","sp":0,"ob":""},{"no":97,"booth":"A1410","ko":"메멘토","en":"Memento Publishing Co.","ck":"","ce":"","sp":0,"ob":""},{"no":98,"booth":"A1410","ko":"목수책방","en":"Moksu Publishing Company","ck":"","ce":"","sp":0,"ob":""},{"no":99,"booth":"A1410","ko":"혜화1117","en":"Hyehwa1117 Publishing Company","ck":"","ce":"","sp":0,"ob":""},{"no":100,"booth":"A1501","ko":"시공사","en":"SIGONGSA","ck":"","ce":"","sp":0,"ob":""},{"no":101,"booth":"A1502","ko":"전국동네책방네트워크","en":"Korea Local bookshop network","ck":"","ce":"","sp":0,"ob":""},{"no":102,"booth":"A1503","ko":"엘르 코리아","en":"ELLE Korea","ck":"","ce":"","sp":0,"ob":""},{"no":103,"booth":"A1601","ko":"(주)열린책들","en":"The Open Books Co.","ck":"","ce":"","sp":0,"ob":""},{"no":104,"booth":"A1602","ko":"(주)오팬하우스","en":"OFANHOUSE","ck":"","ce":"","sp":0,"ob":""},{"no":105,"booth":"A1701","ko":"교보문고","en":"KYOBO BOOK CENTRE","ck":"","ce":"","sp":0,"ob":""},{"no":106,"booth":"A1701","ko":"교보생명 서재","en":"Kyobo Life","ck":"","ce":"","sp":0,"ob":""},{"no":107,"booth":"A1702","ko":"주식회사 케이티밀리의서재","en":"kt millie seojae Co.,Ltd","ck":"","ce":"","sp":0,"ob":""},{"no":108,"booth":"A1703","ko":"예스24","en":"YES24","ck":"","ce":"","sp":0,"ob":""},{"no":109,"booth":"A1801","ko":"","en":"Livres Canada Books","ck":"캐나다","ce":"Canada","sp":0,"ob":""},{"no":110,"booth":"A1801","ko":"","en":"Annick Press","ck":"캐나다","ce":"Canada","sp":0,"ob":""},{"no":111,"booth":"A1801","ko":"","en":"BookLand Press","ck":"캐나다","ce":"Canada","sp":0,"ob":""},{"no":112,"booth":"A1801","ko":"","en":"Drawn & Quarterly","ck":"캐나다","ce":"Canada","sp":0,"ob":""},{"no":113,"booth":"A1801","ko":"","en":"Éditions Alto","ck":"캐나다","ce":"Canada","sp":0,"ob":""},{"no":114,"booth":"A1801","ko":"","en":"Éditions Fonfon","ck":"캐나다","ce":"Canada","sp":0,"ob":""},{"no":115,"booth":"A1801","ko":"","en":"Éditions Michel Quintin","ck":"캐나다","ce":"Canada","sp":0,"ob":""},{"no":116,"booth":"A1801","ko":"","en":"Éditions Québec Amérique","ck":"캐나다","ce":"Canada","sp":0,"ob":""},{"no":117,"booth":"A1801","ko":"","en":"Firefly Books","ck":"캐나다","ce":"Canada","sp":0,"ob":""},{"no":118,"booth":"A1801","ko":"","en":"Les Éditions les Malins","ck":"캐나다","ce":"Canada","sp":0,"ob":""},{"no":119,"booth":"A1801","ko":"","en":"McGill-Queen’s University Press","ck":"캐나다","ce":"Canada","sp":0,"ob":""},{"no":120,"booth":"A1801","ko":"","en":"Orca Book Publishers","ck":"캐나다","ce":"Canada","sp":0,"ob":""},{"no":121,"booth":"A1801","ko":"","en":"University of Toronto Press","ck":"캐나다","ce":"Canada","sp":0,"ob":""},{"no":122,"booth":"A1802","ko":"펭귄랜덤하우스 UK","en":"Penguin Randomhouse UK","ck":"영국","ce":"UK","sp":0,"ob":""},{"no":123,"booth":"A1803","ko":"독일 프랑크푸르트도서전","en":"Frankfurter Buchmesse","ck":"독일","ce":"Germany","sp":0,"ob":""},{"no":124,"booth":"A1803","ko":"","en":"Arbeitsgemeinschaft von Jugendbuchverlagen e.V.","ck":"독일","ce":"Germany","sp":0,"ob":""},{"no":125,"booth":"A1803","ko":"","en":"Droemer Knaur Publishing Group","ck":"독일","ce":"Germany","sp":0,"ob":""},{"no":126,"booth":"A1803","ko":"","en":"Dunkcer & Humblot GmbH","ck":"독일","ce":"Germany","sp":0,"ob":""},{"no":127,"booth":"A1803","ko":"","en":"German Pavilion","ck":"독일","ce":"Germany","sp":0,"ob":""},{"no":128,"booth":"A1803","ko":"주한독일문화원","en":"Goethe-Institut Korea","ck":"독일","ce":"Germany","sp":0,"ob":""},{"no":129,"booth":"A1803","ko":"","en":"Kiepenheuer & Witsch","ck":"독일","ce":"Germany","sp":0,"ob":""},{"no":130,"booth":"A1803","ko":"모어 지베크","en":"Mohr Siebeck GmbH & Co. KG","ck":"독일","ce":"Germany","sp":0,"ob":""},{"no":131,"booth":"A1803","ko":"","en":"MuseARTa GmbH","ck":"독일","ce":"Germany","sp":0,"ob":""},{"no":132,"booth":"A1803","ko":"","en":"Palomaa Publishing","ck":"독일","ce":"Germany","sp":0,"ob":""},{"no":133,"booth":"A1803","ko":"","en":"Rowohlt Verlag GmbH","ck":"독일","ce":"Germany","sp":0,"ob":""},{"no":134,"booth":"A1803","ko":"","en":"Schweizerbart/Borntraeger Science Publishers","ck":"독일","ce":"Germany","sp":0,"ob":""},{"no":135,"booth":"A1803","ko":"","en":"Ullstein Buchverlage GmbH","ck":"독일","ce":"Germany","sp":0,"ob":""},{"no":136,"booth":"A1804","ko":"","en":"YUEWEN|WebNovel","ck":"중국","ce":"China","sp":0,"ob":""},{"no":137,"booth":"A1805","ko":"","en":"Beijiao Children Joy Education & Technology (Beijing) Co., Ltd.","ck":"중국","ce":"China","sp":0,"ob":""},{"no":138,"booth":"A1806","ko":"","en":"Wells Hamilton Literary Consultants","ck":"미국","ce":"USA","sp":0,"ob":""},{"no":139,"booth":"A1901","ko":"책만남홀2","en":"Readers Hall 2","ck":"","ce":"","sp":1,"ob":""},{"no":140,"booth":"A1902","ko":"아트숍","en":"Art Shop","ck":"","ce":"","sp":1,"ob":""},{"no":141,"booth":"A1904","ko":"갈라파고스","en":"Galapagos","ck":"","ce":"","sp":0,"ob":""},{"no":142,"booth":"A1905","ko":"도서출판 들녘","en":"Dulnyouk Publishing Co.","ck":"","ce":"","sp":0,"ob":""},{"no":143,"booth":"A1906","ko":"원더박스","en":"WONDERBOX","ck":"","ce":"","sp":0,"ob":""},{"no":144,"booth":"A1907","ko":"(주)크레용하우스","en":"Crayonhouse. co. Ltd","ck":"","ce":"","sp":0,"ob":""},{"no":145,"booth":"A2001","ko":"생명의말씀사","en":"WORD OF LIFE PRESS","ck":"","ce":"","sp":0,"ob":""},{"no":146,"booth":"A2002","ko":"성서유니온","en":"Scripture Union Korea","ck":"","ce":"","sp":0,"ob":""},{"no":147,"booth":"A2003","ko":"도서출판 폭스코너","en":"Foxcorner Publishing House","ck":"","ce":"","sp":0,"ob":""},{"no":148,"booth":"A2003","ko":"도서출판 다독다독","en":"Dadokdadok Publishing","ck":"","ce":"","sp":0,"ob":""},{"no":149,"booth":"A2004","ko":"안온북스","en":"anonbooks","ck":"","ce":"","sp":0,"ob":""},{"no":150,"booth":"A2005","ko":"청미출판사","en":"CHEONGMI PUBLISHING CO.","ck":"","ce":"","sp":0,"ob":""},{"no":151,"booth":"A2006","ko":"(주)학지사","en":"Hakjisa Co.","ck":"","ce":"","sp":0,"ob":""},{"no":152,"booth":"A2007","ko":"잉글리시에그","en":"ENGLISHEGG","ck":"","ce":"","sp":0,"ob":""},{"no":153,"booth":"A2008","ko":"우리나비","en":"Woorinabi Publishing Co.","ck":"","ce":"","sp":0,"ob":""},{"no":154,"booth":"A2009","ko":"한국출판문화산업진흥원","en":"Publication Industry Promotion Agency of Korea","ck":"","ce":"","sp":0,"ob":""},{"no":155,"booth":"A2009","ko":"그리모어","en":"Grimoire","ck":"","ce":"","sp":0,"ob":""},{"no":156,"booth":"A2009","ko":"나무의말","en":"Words of Trees","ck":"","ce":"","sp":0,"ob":""},{"no":157,"booth":"A2009","ko":"다정한시민","en":"Friendly Citizen","ck":"","ce":"","sp":0,"ob":""},{"no":158,"booth":"A2009","ko":"도서출판 11%","en":"11% Publishing","ck":"","ce":"","sp":0,"ob":""},{"no":159,"booth":"A2009","ko":"도서출판 어웨이크","en":"AWAKE PUBLISHING HOUSE","ck":"","ce":"","sp":0,"ob":""},{"no":160,"booth":"A2009","ko":"문학정원","en":"Munhak Garden","ck":"","ce":"","sp":0,"ob":""},{"no":161,"booth":"A2009","ko":"빅퀘스천 출판사","en":"Big Questions Publishing Co.","ck":"","ce":"","sp":0,"ob":""},{"no":162,"booth":"A2009","ko":"스타라잇 출판사","en":"Starlight books","ck":"","ce":"","sp":0,"ob":""},{"no":163,"booth":"A2009","ko":"아트레이크 출판사","en":"ARTLAKE Inc","ck":"","ce":"","sp":0,"ob":""},{"no":164,"booth":"A2009","ko":"좋은습관연구소","en":"Good Habits Lab","ck":"","ce":"","sp":0,"ob":""},{"no":165,"booth":"A2009","ko":"쥬쥬베북스","en":"jujube books","ck":"","ce":"","sp":0,"ob":""},{"no":166,"booth":"A2009","ko":"책과바람","en":"Book&Wish Publisher","ck":"","ce":"","sp":0,"ob":""},{"no":167,"booth":"A2009","ko":"한밤의빛","en":"HANBAMBIT","ck":"","ce":"","sp":0,"ob":""},{"no":168,"booth":"A2009","ko":"허밍북스","en":"HUMMINGBOOKS","ck":"","ce":"","sp":0,"ob":""},{"no":169,"booth":"A2009","ko":"호랑이꿈","en":"Tigerdream Books","ck":"","ce":"","sp":0,"ob":""},{"no":170,"booth":"A2009","ko":"호손재","en":"Hosonjae","ck":"","ce":"","sp":0,"ob":""},{"no":171,"booth":"A201","ko":"안그라픽스","en":"Ahn Graphics","ck":"","ce":"","sp":0,"ob":""},{"no":172,"booth":"A2010","ko":"주식회사 난다","en":"Nanda","ck":"","ce":"","sp":0,"ob":""},{"no":173,"booth":"A202","ko":"미디어버스","en":"Mediabus","ck":"","ce":"","sp":0,"ob":""},{"no":174,"booth":"A202","ko":"사월의눈","en":"Aprilsnow Press","ck":"","ce":"","sp":0,"ob":""},{"no":175,"booth":"A202","ko":"프로파간다","en":"propaganda","ck":"","ce":"","sp":0,"ob":""},{"no":176,"booth":"A203","ko":"인북","en":"INBOOK","ck":"","ce":"","sp":0,"ob":""},{"no":177,"booth":"A204","ko":"안녕로빈","en":"hellorobin","ck":"","ce":"","sp":0,"ob":""},{"no":178,"booth":"A205","ko":"킨더랜드+반달+여섯번째봄","en":"KINDERLAND+BANDAL+THE SIXTH SPRING","ck":"","ce":"","sp":0,"ob":""},{"no":179,"booth":"A206","ko":"(주)학토재","en":"HAKTOJAE","ck":"","ce":"","sp":0,"ob":""},{"no":180,"booth":"A207","ko":"노란상상","en":"Noran Sangsang Books","ck":"","ce":"","sp":0,"ob":""},{"no":181,"booth":"A208","ko":"(주)도서출판보리","en":"BORI","ck":"","ce":"","sp":0,"ob":""},{"no":182,"booth":"A209","ko":"니케북스","en":"nikebooks","ck":"","ce":"","sp":0,"ob":""},{"no":183,"booth":"A209","ko":"목요일출판사","en":"mokyoil","ck":"","ce":"","sp":0,"ob":""},{"no":184,"booth":"A209","ko":"페이퍼스토리","en":"PAPERSTORY BOOKS","ck":"","ce":"","sp":0,"ob":""},{"no":185,"booth":"A210","ko":"거북이북스","en":"GOBOOKY BOOKS","ck":"","ce":"","sp":0,"ob":""},{"no":186,"booth":"A2101","ko":"사회평론","en":"sahoipyoungnon","ck":"","ce":"","sp":0,"ob":""},{"no":187,"booth":"A2102","ko":"오이뮤","en":"OIMU","ck":"","ce":"","sp":0,"ob":""},{"no":188,"booth":"A2103","ko":"은행나무","en":"EunHaengNaMu","ck":"","ce":"","sp":0,"ob":""},{"no":189,"booth":"A2103","ko":"(주)휴머니스트 출판그룹","en":"Humanist Publishing Group","ck":"","ce":"","sp":0,"ob":""},{"no":190,"booth":"A2201","ko":"길벗어린이","en":"Gilbut Children Publishing","ck":"","ce":"","sp":0,"ob":""},{"no":191,"booth":"A2202","ko":"문학과지성사","en":"Moonji Publishing Co., Ltd","ck":"","ce":"","sp":0,"ob":""},{"no":192,"booth":"A2203","ko":"소전문화재단","en":"Sojeon Foundation","ck":"","ce":"","sp":0,"ob":""},{"no":193,"booth":"A2301","ko":"서울특별시교육청","en":"Seoul Metropolitan Office of Education","ck":"","ce":"","sp":0,"ob":""},{"no":194,"booth":"A2302","ko":"마음산책","en":"MAUMSANCHAEK","ck":"","ce":"","sp":0,"ob":""},{"no":195,"booth":"A2302","ko":"사계절출판사","en":"SAKYEJUL","ck":"","ce":"","sp":0,"ob":""},{"no":196,"booth":"A2303","ko":"디자인하우스","en":"Designhouse","ck":"","ce":"","sp":0,"ob":""},{"no":197,"booth":"A2303","ko":"주식회사 오뚜기","en":"OTOKI Corporation","ck":"","ce":"","sp":0,"ob":""},{"no":198,"booth":"A2401","ko":"타이베이도서전재단","en":"Taipei Book Fair Foundation","ck":"타이완","ce":"Taiwan","sp":0,"ob":""},{"no":199,"booth":"A2402","ko":"책만남홀1","en":"Readers Hall 1","ck":"","ce":"","sp":1,"ob":""},{"no":200,"booth":"A301","ko":"워크룸 프레스","en":"Workroom Press","ck":"","ce":"","sp":0,"ob":""},{"no":201,"booth":"A302","ko":"산지니","en":"Sanzini","ck":"","ce":"","sp":0,"ob":""},{"no":202,"booth":"A303","ko":"(주)까치글방","en":"Kachi Publishing Co., Ltd.","ck":"","ce":"","sp":0,"ob":""},{"no":203,"booth":"A304","ko":"글항아리","en":"GEULHANGARI","ck":"","ce":"","sp":0,"ob":""},{"no":204,"booth":"A305","ko":"청아출판사 / 봄마중","en":"ChungA Publishing Co.","ck":"","ce":"","sp":0,"ob":""},{"no":205,"booth":"A306","ko":"도서출판 풀빛","en":"Pulbit","ck":"","ce":"","sp":0,"ob":""},{"no":206,"booth":"A307","ko":"도서출판 푸른숲","en":"PRUNSOOP publisher","ck":"","ce":"","sp":0,"ob":""},{"no":207,"booth":"A308","ko":"(사)한국과학기술출판협회","en":"Korean Science & Technology Publishers Association","ck":"","ce":"","sp":0,"ob":""},{"no":208,"booth":"A308","ko":"군자출판사","en":"KOONJA Publishing Inc.","ck":"","ce":"","sp":0,"ob":""},{"no":209,"booth":"A401","ko":"보림출판사","en":"BORIMPRESS","ck":"","ce":"","sp":0,"ob":""},{"no":210,"booth":"A402","ko":"네이버웹툰","en":"NAVER WEBTOON","ck":"","ce":"","sp":0,"ob":""},{"no":211,"booth":"A403","ko":"(주)위즈덤하우스","en":"WISDOMHOUSE","ck":"","ce":"","sp":0,"ob":""},{"no":212,"booth":"A501","ko":"이야기장수","en":"STORYSELLER","ck":"","ce":"","sp":0,"ob":""},{"no":213,"booth":"A501","ko":"솔테라이브러리","en":"Salté Library","ck":"","ce":"","sp":0,"ob":""},{"no":214,"booth":"A502","ko":"(주)김영사","en":"Gimmyoung Publishers","ck":"","ce":"","sp":0,"ob":""},{"no":215,"booth":"A503","ko":"(주)문학수첩","en":"MoonhakSoochup","ck":"","ce":"","sp":0,"ob":""},{"no":216,"booth":"A601","ko":"주한프랑스대사관 문화과","en":"Embassy of France in the Republic of Korea","ck":"프랑스","ce":"France","sp":1,"ob":""},{"no":217,"booth":"A601","ko":"프랑스 출판네트워크 (구 : 프랑스국제출판사무국)","en":"France Livre (formerly BIEF)","ck":"프랑스","ce":"France","sp":1,"ob":""},{"no":218,"booth":"A602","ko":"(주)쌤앤파커스","en":"Sam & Parkers Co., Ltd.","ck":"","ce":"","sp":0,"ob":""},{"no":219,"booth":"A701","ko":"봄알람","en":"baumealame","ck":"","ce":"","sp":0,"ob":""},{"no":220,"booth":"A702","ko":"타이피스트","en":"Typist Press","ck":"","ce":"","sp":0,"ob":""},{"no":221,"booth":"A703","ko":"사단법인 한국대학출판협회","en":"THE ASSOCIATION OF KOREAN UNIVERSITY PRESSES","ck":"","ce":"","sp":0,"ob":""},{"no":222,"booth":"A704","ko":"도서출판 북극곰","en":"BOOKGOODCOME","ck":"","ce":"","sp":0,"ob":""},{"no":223,"booth":"A705","ko":"국민서관","en":"KOOKMINBOOKS","ck":"","ce":"","sp":0,"ob":""},{"no":224,"booth":"A706","ko":"주식회사 성안당","en":"SungAnDang Publishing Inc.","ck":"","ce":"","sp":0,"ob":""},{"no":225,"booth":"A707","ko":"책읽는고양이","en":"Reading Cat","ck":"","ce":"","sp":0,"ob":""},{"no":226,"booth":"A708","ko":"소미미디어","en":"SOMYMEDIA Inc.","ck":"","ce":"","sp":0,"ob":""},{"no":227,"booth":"A709","ko":"고래인","en":"goraein","ck":"","ce":"","sp":0,"ob":""},{"no":228,"booth":"A709","ko":"키큰도토리","en":"Kikeundotori Publishing Co.","ck":"","ce":"","sp":0,"ob":""},{"no":229,"booth":"A801","ko":"부산출판문화산업협회","en":"Busan Publishing and Culture Industry Association","ck":"","ce":"","sp":0,"ob":""},{"no":230,"booth":"A801","ko":"고양이함수","en":"Cat Function","ck":"","ce":"","sp":0,"ob":""},{"no":231,"booth":"A801","ko":"공공북스","en":"Gonggong books","ck":"","ce":"","sp":0,"ob":""},{"no":232,"booth":"A801","ko":"냥이의야옹","en":"NYAONGBOOKS","ck":"","ce":"","sp":0,"ob":""},{"no":233,"booth":"A801","ko":"뮤트스튜디오","en":"Muut Studio","ck":"","ce":"","sp":0,"ob":""},{"no":234,"booth":"A801","ko":"씨엘미디어","en":"CLmedia","ck":"","ce":"","sp":0,"ob":""},{"no":235,"booth":"A801","ko":"해피북미디어","en":"happybook media","ck":"","ce":"","sp":0,"ob":""},{"no":236,"booth":"A802","ko":"주식회사 소원나무","en":"SOWONNAMU PUBLISHING CO,. LTD.","ck":"","ce":"","sp":0,"ob":""},{"no":237,"booth":"A803","ko":"뜨인돌출판","en":"Danielstone Publishing","ck":"","ce":"","sp":0,"ob":""},{"no":238,"booth":"A804","ko":"밝은미래","en":"Balgeunmirae Publishing Co","ck":"","ce":"","sp":0,"ob":""},{"no":239,"booth":"A805","ko":"도서출판 동녘","en":"Dongnyok publishers","ck":"","ce":"","sp":0,"ob":""},{"no":240,"booth":"A806","ko":"클레이하우스 주식회사","en":"CLAYHOUSE","ck":"","ce":"","sp":0,"ob":""},{"no":241,"booth":"A807","ko":"보스토크 프레스","en":"VOSTOK PRESS","ck":"","ce":"","sp":0,"ob":""},{"no":242,"booth":"A807","ko":"프리즘오브","en":"PRISM OF","ck":"","ce":"","sp":0,"ob":""},{"no":243,"booth":"A808","ko":"진선출판사","en":"Jinsun Publishing","ck":"","ce":"","sp":0,"ob":""},{"no":244,"booth":"A901","ko":"윌북","en":"Willbooks Publishing Co.","ck":"","ce":"","sp":0,"ob":""},{"no":245,"booth":"A902","ko":"더중앙플러스","en":"The JoongAng Plus","ck":"","ce":"","sp":0,"ob":""},{"no":246,"booth":"A903","ko":"동아시아·허블","en":"EAST-ASIA·Hubble","ck":"","ce":"","sp":0,"ob":""},{"no":247,"booth":"B101","ko":"어크로스","en":"Across Publishing Group, Inc","ck":"","ce":"","sp":0,"ob":""},{"no":248,"booth":"B102","ko":"움직씨 출판사","en":"Oomzicc Publisher","ck":"","ce":"","sp":0,"ob":""},{"no":249,"booth":"B102","ko":"오리집","en":"ORIZIP","ck":"","ce":"","sp":0,"ob":""},{"no":250,"booth":"B103","ko":"(주)책읽는곰","en":"Bear Books Inc.","ck":"","ce":"","sp":0,"ob":""},{"no":251,"booth":"B104","ko":"페이퍼독","en":"PAPERDOG","ck":"","ce":"","sp":0,"ob":""},{"no":252,"booth":"B104","ko":"토끼섬","en":"Tokkiseom","ck":"","ce":"","sp":0,"ob":""},{"no":253,"booth":"B105","ko":"송송책방","en":"SONGSONG BOOKS","ck":"","ce":"","sp":0,"ob":""},{"no":254,"booth":"B106","ko":"꿈공장플러스","en":"DREAMBOOKS","ck":"","ce":"","sp":0,"ob":""},{"no":255,"booth":"B107","ko":"아카넷","en":"Acanet","ck":"","ce":"","sp":0,"ob":""},{"no":256,"booth":"B108","ko":"디자인이음","en":"designEUM","ck":"","ce":"","sp":0,"ob":""},{"no":257,"booth":"B109","ko":"컬처룩","en":"culturelook","ck":"","ce":"","sp":0,"ob":""},{"no":258,"booth":"B109","ko":"코쿤북스","en":"cocoonbooks","ck":"","ce":"","sp":0,"ob":""},{"no":259,"booth":"B201","ko":"유유출판사","en":"UU PRESS","ck":"","ce":"","sp":0,"ob":""},{"no":260,"booth":"B202","ko":"바람북스","en":"BARAMBOOKS","ck":"","ce":"","sp":0,"ob":""},{"no":261,"booth":"B203","ko":"레모 출판사","en":"LES MOTS","ck":"","ce":"","sp":0,"ob":""},{"no":262,"booth":"B203","ko":"스위밍꿀","en":"SWIMMINGKUL","ck":"","ce":"","sp":0,"ob":""},{"no":263,"booth":"B204","ko":"주식회사 도서출판점자","en":"Braille Publishing Company","ck":"","ce":"","sp":0,"ob":""},{"no":264,"booth":"B205","ko":"후즈갓마이테일","en":"Whos Got My Tail","ck":"","ce":"","sp":0,"ob":""},{"no":265,"booth":"B206","ko":"흰토끼프레스(바캉스프로젝트)","en":"Hintoki Press(Vacances)","ck":"","ce":"","sp":0,"ob":""},{"no":266,"booth":"B207","ko":"SIBF × 글월 〈페이지 사이의 우체국〉","en":"SIBF × geulwoll 〈The Post Office Between the Pages〉","ck":"","ce":"","sp":1,"ob":""},{"no":267,"booth":"B301","ko":"도서출판 노란돼지","en":"Yellowpig publisher","ck":"","ce":"","sp":0,"ob":""},{"no":268,"booth":"B302","ko":"늘보의 섬","en":"SLOTH ISLAND","ck":"","ce":"","sp":0,"ob":""},{"no":269,"booth":"B303","ko":"(주)창비교육","en":"CHANGBIEDU","ck":"","ce":"","sp":0,"ob":""},{"no":270,"booth":"B304","ko":"서해문집","en":"Booksea Publishing Co.","ck":"","ce":"","sp":0,"ob":""},{"no":271,"booth":"B305","ko":"한림사","en":"HANLIMSA","ck":"","ce":"","sp":0,"ob":""},{"no":272,"booth":"B306","ko":"나비클럽","en":"NABICLUB","ck":"","ce":"","sp":0,"ob":""},{"no":273,"booth":"B307","ko":"국립생태원","en":"NIE PRESS","ck":"","ce":"","sp":0,"ob":""},{"no":274,"booth":"B308","ko":"퍼머넌트북스","en":"Permanent Books","ck":"","ce":"","sp":0,"ob":""},{"no":275,"booth":"B309","ko":"주식회사 한겨레엔","en":"Hankyoreh En Co., Ltd.","ck":"","ce":"","sp":0,"ob":""},{"no":276,"booth":"B400","ko":"책마을","en":"Book Village","ck":"","ce":"","sp":1,"ob":"B400"},{"no":277,"booth":"B400","ko":"누땡스","en":"nu thanks","ck":"","ce":"","sp":1,"ob":"B401"},{"no":278,"booth":"B400","ko":"텍스트 프레스","en":"textpress.kr","ck":"","ce":"","sp":1,"ob":"B402"},{"no":279,"booth":"B400","ko":"프레스탁!","en":"press tac!","ck":"","ce":"","sp":1,"ob":"B403"},{"no":280,"booth":"B400","ko":"225호","en":"Room Number 225","ck":"","ce":"","sp":1,"ob":"B404"},{"no":281,"booth":"B400","ko":"라마북스","en":"LLAMA BOOKS","ck":"","ce":"","sp":1,"ob":"B405"},{"no":282,"booth":"B400","ko":"비바 헤리티지 시리즈","en":"Viva Heritage Series","ck":"","ce":"","sp":1,"ob":"B406"},{"no":283,"booth":"B400","ko":"라우더북스","en":"Louder Books","ck":"","ce":"","sp":1,"ob":"B407"},{"no":284,"booth":"B400","ko":"","en":"Fidèle éditions","ck":"프랑스","ce":"France","sp":1,"ob":"B408"},{"no":285,"booth":"B400","ko":"","en":"Owl & Dog Playbooks","ck":"영국","ce":"UK","sp":1,"ob":"B409"},{"no":286,"booth":"B400","ko":"프레스룸","en":"PRESS ROOM","ck":"","ce":"","sp":1,"ob":"B410"},{"no":287,"booth":"B400","ko":"히스테리안","en":"Hysterian","ck":"","ce":"","sp":1,"ob":"B411"},{"no":288,"booth":"B400","ko":"행복한 재수가 있는","en":"Happy Jaesu Press","ck":"","ce":"","sp":1,"ob":"B412"},{"no":289,"booth":"B400","ko":"두낫프레스?프레스!","en":"donotpress?press!","ck":"","ce":"","sp":1,"ob":"B413"},{"no":290,"booth":"B400","ko":"자인운트","en":"Seinund","ck":"","ce":"","sp":1,"ob":"B414"},{"no":291,"booth":"B400","ko":"유연성클럽","en":"THE FLEXIBILITY CLUB","ck":"","ce":"","sp":1,"ob":"B415"},{"no":292,"booth":"B400","ko":"메이커메이커","en":"MAKERMAKER","ck":"","ce":"","sp":1,"ob":"B416"},{"no":293,"booth":"B400","ko":"0.1","en":"0.1","ck":"","ce":"","sp":1,"ob":"B417"},{"no":294,"booth":"B400","ko":"검정프레스","en":"geomjung press","ck":"","ce":"","sp":1,"ob":"B418"},{"no":295,"booth":"B400","ko":"써니라운드","en":"SUNNYROUND","ck":"","ce":"","sp":1,"ob":"B419"},{"no":296,"booth":"B400","ko":"픽션들","en":"fictiondle","ck":"","ce":"","sp":1,"ob":"B420"},{"no":297,"booth":"B400","ko":"남섬책방","en":"Namseom Books","ck":"","ce":"","sp":1,"ob":"B421"},{"no":298,"booth":"B400","ko":"시네필 책방 코프키노","en":"KopfKino","ck":"","ce":"","sp":1,"ob":"B422"},{"no":299,"booth":"B400","ko":"요호이","en":"yohoi","ck":"","ce":"","sp":1,"ob":"B423"},{"no":300,"booth":"B400","ko":"스튜디오604","en":"STUDIO604","ck":"","ce":"","sp":1,"ob":"B424"},{"no":301,"booth":"B400","ko":"돛과닻","en":"Sail and Anchor","ck":"","ce":"","sp":1,"ob":"B425"},{"no":302,"booth":"B400","ko":"스크립토","en":"Scripto","ck":"","ce":"","sp":1,"ob":"B426"},{"no":303,"booth":"B400","ko":"타바코북스","en":"TABACOBOOKS","ck":"","ce":"","sp":1,"ob":"B427"},{"no":304,"booth":"B400","ko":"머쉬룸","en":"mushRoom","ck":"","ce":"","sp":1,"ob":"B428"},{"no":305,"booth":"B400","ko":"소환사","en":"Sohwansa","ck":"","ce":"","sp":1,"ob":"B429"},{"no":306,"booth":"B400","ko":"마그네틱 파이브","en":"MAGNETIC 5","ck":"","ce":"","sp":1,"ob":"B430"},{"no":307,"booth":"B400","ko":"하호하호","en":"hahahaha","ck":"","ce":"","sp":1,"ob":"B431"},{"no":308,"booth":"B400","ko":"1도씨와 온도들","en":"1docci","ck":"","ce":"","sp":1,"ob":"B432"},{"no":309,"booth":"B400","ko":"후루룩","en":"Hooloolook","ck":"","ce":"","sp":1,"ob":"B433"},{"no":310,"booth":"B400","ko":"유일무이(누구나)","en":"NUGUNA","ck":"","ce":"","sp":1,"ob":"B434"},{"no":311,"booth":"B400","ko":"코스모 프레스","en":"kosmo press","ck":"","ce":"","sp":1,"ob":"B435"},{"no":312,"booth":"B400","ko":"아뜰리에아쉬","en":"AtelierH","ck":"","ce":"","sp":1,"ob":"B436"},{"no":313,"booth":"B400","ko":"라우트 프레스","en":"Route Press","ck":"","ce":"","sp":1,"ob":"B437"},{"no":314,"booth":"B400","ko":"오큐파이 더 시티","en":"Occupy the City","ck":"","ce":"","sp":1,"ob":"B438"},{"no":315,"booth":"B400","ko":"길고도 짧은 이야기","en":"longshortstory","ck":"","ce":"","sp":1,"ob":"B439"},{"no":316,"booth":"B400","ko":"무주산골영화제","en":"MJFF","ck":"","ce":"","sp":1,"ob":"B440"},{"no":317,"booth":"B400","ko":"미스테리어스플랜트","en":"mysterious plant","ck":"","ce":"","sp":1,"ob":"B441"},{"no":318,"booth":"B400","ko":"소화당","en":"SoHwaDang","ck":"","ce":"","sp":1,"ob":"B442"},{"no":319,"booth":"B400","ko":"김주영","en":"Joo Young Kim","ck":"","ce":"","sp":1,"ob":"B443"},{"no":320,"booth":"B400","ko":"삐약삐약북스","en":"PPIYACKPPIYACK BOOKS","ck":"","ce":"","sp":1,"ob":"B444"},{"no":321,"booth":"B400","ko":"카인드오브썸머","en":"KIND OF SUMMER","ck":"","ce":"","sp":1,"ob":"B445"},{"no":322,"booth":"B400","ko":"마블로켓","en":"MARBLEROCKET","ck":"","ce":"","sp":1,"ob":"B446"},{"no":323,"booth":"B400","ko":"블루토마토즈","en":"bluetomatoes","ck":"","ce":"","sp":1,"ob":"B447"},{"no":324,"booth":"B400","ko":"노말에이","en":"NOrmal A","ck":"","ce":"","sp":1,"ob":"B448"},{"no":325,"booth":"B400","ko":"연필과머그","en":"Pencil and Mug","ck":"","ce":"","sp":1,"ob":"B449"},{"no":326,"booth":"B400","ko":"까막북","en":"KKAMAKBOOK","ck":"","ce":"","sp":1,"ob":"B450"},{"no":327,"booth":"B400","ko":"에트르","en":"ETRE","ck":"","ce":"","sp":1,"ob":"B451"},{"no":328,"booth":"B400","ko":"책덕","en":"Bookduck","ck":"","ce":"","sp":1,"ob":"B452"},{"no":329,"booth":"B400","ko":"디 오브젝트","en":"the object","ck":"","ce":"","sp":1,"ob":"B453"},{"no":330,"booth":"B400","ko":"TEMPORARY BOOKSHOP | C시지G","en":"TEMPORARY BOOKSHOP | CsijiG","ck":"","ce":"","sp":1,"ob":"B454"},{"no":331,"booth":"B400","ko":"파도","en":"SEEYOURSEA","ck":"","ce":"","sp":1,"ob":"B455"},{"no":332,"booth":"B400","ko":"선과 결","en":"LineGrain","ck":"","ce":"","sp":1,"ob":"B456"},{"no":333,"booth":"B400","ko":"탱크 프레스","en":"TANK Press","ck":"","ce":"","sp":1,"ob":"B457"},{"no":334,"booth":"B400","ko":"바이블랭크","en":"by_[blank]","ck":"","ce":"","sp":1,"ob":"B458"},{"no":335,"booth":"B400","ko":"","en":"te editions","ck":"미국","ce":"USA","sp":1,"ob":"B459"},{"no":336,"booth":"B400","ko":"","en":"One Stroke","ck":"일본","ce":"Japan","sp":1,"ob":"B460"},{"no":337,"booth":"B400","ko":"마테리알","en":"ma-te-ri-al","ck":"","ce":"","sp":1,"ob":"B461"},{"no":338,"booth":"B400","ko":"소시민워크","en":"sosiminwork","ck":"","ce":"","sp":1,"ob":"B462"},{"no":339,"booth":"B400","ko":"그래픽하","en":"GRAPHICHA","ck":"","ce":"","sp":1,"ob":"B463"},{"no":340,"booth":"B400","ko":"인공위성+82","en":"Satellite+82","ck":"","ce":"","sp":1,"ob":"B464"},{"no":341,"booth":"B400","ko":"수목요일(모눈지)","en":"sumokyoil(monunji)","ck":"","ce":"","sp":1,"ob":"B465"},{"no":342,"booth":"B400","ko":"하이오 웍스","en":"Haio works","ck":"","ce":"","sp":1,"ob":"B466"},{"no":343,"booth":"B400","ko":"미씽아카이브","en":"missing_archive","ck":"","ce":"","sp":1,"ob":"B467"},{"no":344,"booth":"B400","ko":"","en":"Image 3","ck":"타이완","ce":"Taiwan","sp":1,"ob":"B468"},{"no":345,"booth":"B400","ko":"","en":"Homeward","ck":"타이완","ce":"Taiwan","sp":1,"ob":"B469"},{"no":346,"booth":"B400","ko":"","en":"Rusuban Studio","ck":"타이완","ce":"Taiwan","sp":1,"ob":"B470"},{"no":347,"booth":"B400","ko":"","en":"Indie Publishers Association of Taiwan","ck":"타이완","ce":"Taiwan","sp":1,"ob":"B471"},{"no":348,"booth":"B400","ko":"","en":"comma books","ck":"타이완","ce":"Taiwan","sp":1,"ob":"B471"},{"no":349,"booth":"B400","ko":"","en":"Guerrilla Publishing Co., Ltd","ck":"타이완","ce":"Taiwan","sp":1,"ob":"B471"},{"no":350,"booth":"B400","ko":"","en":"Halftone Press","ck":"타이완","ce":"Taiwan","sp":1,"ob":"B471"},{"no":351,"booth":"B400","ko":"","en":"Kuroshio Culture Co. Ltd.","ck":"타이완","ce":"Taiwan","sp":1,"ob":"B471"},{"no":352,"booth":"B400","ko":"","en":"LA VIE CINE studio","ck":"타이완","ce":"Taiwan","sp":1,"ob":"B471"},{"no":353,"booth":"B400","ko":"","en":"Monsoon Zone Publishing Co., Ltd.","ck":"타이완","ce":"Taiwan","sp":1,"ob":"B471"},{"no":354,"booth":"B400","ko":"","en":"MULU OFFICE CO., LTD.","ck":"타이완","ce":"Taiwan","sp":1,"ob":"B471"},{"no":355,"booth":"B400","ko":"","en":"SiLoo Story","ck":"타이완","ce":"Taiwan","sp":1,"ob":"B471"},{"no":356,"booth":"B400","ko":"","en":"Slowork Publishing Ltd.","ck":"타이완","ce":"Taiwan","sp":1,"ob":"B471"},{"no":357,"booth":"B400","ko":"","en":"TOKHIU BOOKS CO., LTD.","ck":"타이완","ce":"Taiwan","sp":1,"ob":"B471"},{"no":358,"booth":"B400","ko":"","en":"Independent Publishers Expo","ck":"일본","ce":"Japan","sp":1,"ob":"B472"},{"no":359,"booth":"B400","ko":"","en":"Singapore Art Book Fair","ck":"싱가포르","ce":"Singapore","sp":1,"ob":"B473"},{"no":360,"booth":"B501","ko":"한솔제지(주)","en":"Hansol Paper","ck":"","ce":"","sp":0,"ob":""},{"no":361,"booth":"B502","ko":"윤에디션","en":"YUN EDITION","ck":"","ce":"","sp":0,"ob":""},{"no":362,"booth":"B503","ko":"롤러코스터","en":"Rollercoaster Press","ck":"","ce":"","sp":0,"ob":""},{"no":363,"booth":"B503","ko":"초록비책공방","en":"Greenrainbooks","ck":"","ce":"","sp":0,"ob":""},{"no":364,"booth":"B504","ko":"마포출판문화진흥센터","en":"PLATFORM P","ck":"","ce":"","sp":0,"ob":""},{"no":365,"booth":"B504","ko":"경옥초이","en":"KYONGOKCHOI BOOKS","ck":"","ce":"","sp":0,"ob":""},{"no":366,"booth":"B504","ko":"내로라 출판사","en":"The Naerora Bookmakers","ck":"","ce":"","sp":0,"ob":""},{"no":367,"booth":"B504","ko":"니라이카나이","en":"NIRAIKANAI","ck":"","ce":"","sp":0,"ob":""},{"no":368,"booth":"B504","ko":"도깨비사","en":"dokebisha","ck":"","ce":"","sp":0,"ob":""},{"no":369,"booth":"B504","ko":"두두플래닛","en":"Dodoplanet","ck":"","ce":"","sp":0,"ob":""},{"no":370,"booth":"B504","ko":"두유라이크","en":"DO! U LIKE","ck":"","ce":"","sp":0,"ob":""},{"no":371,"booth":"B504","ko":"리케의 디자인랩","en":"lidilab","ck":"","ce":"","sp":0,"ob":""},{"no":372,"booth":"B504","ko":"마리유니버스","en":"Mariuniverse","ck":"","ce":"","sp":0,"ob":""},{"no":373,"booth":"B504","ko":"머핀북","en":"MuffinbooK","ck":"","ce":"","sp":0,"ob":""},{"no":374,"booth":"B504","ko":"무블출판사","en":"MOBL Books","ck":"","ce":"","sp":0,"ob":""},{"no":375,"booth":"B504","ko":"무중력프레스","en":"Zero Gravity Press","ck":"","ce":"","sp":0,"ob":""},{"no":376,"booth":"B504","ko":"물숨","en":"moolsoom","ck":"","ce":"","sp":0,"ob":""},{"no":377,"booth":"B504","ko":"밤두","en":"bamdoo press","ck":"","ce":"","sp":0,"ob":""},{"no":378,"booth":"B504","ko":"북스토어블","en":"bookstorable","ck":"","ce":"","sp":0,"ob":""},{"no":379,"booth":"B504","ko":"붉은사슴","en":"Red Deer","ck":"","ce":"","sp":0,"ob":""},{"no":380,"booth":"B504","ko":"빛틈","en":"vitteum","ck":"","ce":"","sp":0,"ob":""},{"no":381,"booth":"B504","ko":"생각하는 달팽이","en":"Thinking Snail","ck":"","ce":"","sp":0,"ob":""},{"no":382,"booth":"B504","ko":"선홍빛","en":"Sunhongbit","ck":"","ce":"","sp":0,"ob":""},{"no":383,"booth":"B504","ko":"스튜디오 에디트","en":"studio_edit","ck":"","ce":"","sp":0,"ob":""},{"no":384,"booth":"B504","ko":"스튜디오블랑","en":"STUDIO BLANC","ck":"","ce":"","sp":0,"ob":""},{"no":385,"booth":"B504","ko":"쓰는사람","en":"SNSR","ck":"","ce":"","sp":0,"ob":""},{"no":386,"booth":"B504","ko":"여가도시","en":"Yeogadosi","ck":"","ce":"","sp":0,"ob":""},{"no":387,"booth":"B504","ko":"여름의서재","en":"summerbooks","ck":"","ce":"","sp":0,"ob":""},{"no":388,"booth":"B504","ko":"유유히","en":"UUHEE BOOKS","ck":"","ce":"","sp":0,"ob":""},{"no":389,"booth":"B504","ko":"인생책방/마이북하우스","en":"Lifebookstore/Mybookhouse","ck":"","ce":"","sp":0,"ob":""},{"no":390,"booth":"B504","ko":"정재이프레스","en":"j.jaeipress","ck":"","ce":"","sp":0,"ob":""},{"no":391,"booth":"B504","ko":"출판사 이베르","en":"hiver press","ck":"","ce":"","sp":0,"ob":""},{"no":392,"booth":"B504","ko":"테일브릿지","en":"The Tale Bridge","ck":"","ce":"","sp":0,"ob":""},{"no":393,"booth":"B504","ko":"톰톰프레스","en":"TomTom Press","ck":"","ce":"","sp":0,"ob":""},{"no":394,"booth":"B504","ko":"페이지미디어브릿지","en":"PMB","ck":"","ce":"","sp":0,"ob":""},{"no":395,"booth":"B504","ko":"해파리","en":"HAEPARY","ck":"","ce":"","sp":0,"ob":""},{"no":396,"booth":"B504","ko":"혼혼","en":"HONHON","ck":"","ce":"","sp":0,"ob":""},{"no":397,"booth":"B505","ko":"쪽프레스","en":"JJOKKPRESS","ck":"","ce":"","sp":0,"ob":""},{"no":398,"booth":"B506","ko":"도서출판도반","en":"DOBAN BOOKS","ck":"","ce":"","sp":0,"ob":""},{"no":399,"booth":"B601","ko":"안전가옥","en":"SAFEHOUSE","ck":"","ce":"","sp":0,"ob":""},{"no":400,"booth":"B602","ko":"문학동네","en":"Munhakdongne","ck":"","ce":"","sp":0,"ob":""},{"no":401,"booth":"B603","ko":"창비","en":"Changbi Publishers","ck":"","ce":"","sp":0,"ob":""},{"no":402,"booth":"B604","ko":"아침달","en":"ACHIMDAL","ck":"","ce":"","sp":0,"ob":""},{"no":403,"booth":"B605","ko":"다람출판사","en":"Darambooks Publishing","ck":"","ce":"","sp":0,"ob":""},{"no":404,"booth":"B606","ko":"주식회사 휴먼밸류 / 더클래스","en":"HUMAN VALUE, THE CLASS","ck":"","ce":"","sp":0,"ob":""},{"no":405,"booth":"B607","ko":"북챗","en":"BOOKCHAT","ck":"","ce":"","sp":0,"ob":""},{"no":406,"booth":"B608","ko":"썸북스","en":"SOMEBOOKS","ck":"","ce":"","sp":0,"ob":""},{"no":407,"booth":"B609","ko":"국가보훈부","en":"Ministry of Patriots and Veterans Affairs","ck":"","ce":"","sp":0,"ob":""},{"no":408,"booth":"B701","ko":"(주)커피 리브레","en":"COFFEE LIBRE","ck":"","ce":"","sp":1,"ob":""},{"no":409,"booth":"B702","ko":"BBK × SIBF 책 라운지 with 일룸","en":"BBK × SIBF Book Lounge with iloom","ck":"","ce":"","sp":1,"ob":""},{"no":410,"booth":"B703","ko":"주제전시","en":"Theme Exhibition","ck":"","ce":"","sp":1,"ob":""},{"no":411,"booth":"B704","ko":"책마당","en":"Book Salon","ck":"","ce":"","sp":1,"ob":""},{"no":412,"booth":"B705","ko":"프레스룸","en":"Press Room","ck":"","ce":"","sp":1,"ob":""},{"no":413,"booth":"B706","ko":"연사 라운지3","en":"Speakders Lounge 3","ck":"","ce":"","sp":1,"ob":""},{"no":414,"booth":"B707","ko":"연사 라운지","en":"Speakders Lounge","ck":"","ce":"","sp":1,"ob":""},{"no":415,"booth":"A1903","ko":"연사 라운지2","en":"Speakders Lounge 2","ck":"","ce":"","sp":1,"ob":""},{"no":416,"booth":"A1807","ko":"연사 라운지1","en":"Speakders Lounge 1","ck":"","ce":"","sp":1,"ob":""},{"no":417,"booth":"Ticket-Info_B1","ko":"B1홀 티켓‧인포데스크","en":"Ticket Office‧Information - Hall B1","ck":"","ce":"","sp":1,"ob":""},{"no":418,"booth":"Ticket-Info_A","ko":"A홀 티켓‧인포데스크","en":"Ticket Office‧Information - Hall A","ck":"","ce":"","sp":1,"ob":""},{"no":419,"booth":"A1101","ko":"황금가지","en":"Goldenbough","ck":"","ce":"","sp":0,"ob":""},{"no":420,"booth":"B400","ko":"","en":"Blue Sheep Co., ltd.","ck":"","ce":"","sp":1,"ob":"B472"},{"no":421,"booth":"B400","ko":"","en":"ELVIS PRESS","ck":"","ce":"","sp":1,"ob":"B472"},{"no":422,"booth":"B400","ko":"","en":"LLC INSECTS","ck":"","ce":"","sp":1,"ob":"B472"},{"no":423,"booth":"B400","ko":"","en":"Manazuru Publishing","ck":"","ce":"","sp":1,"ob":"B472"},{"no":424,"booth":"B400","ko":"","en":"Milllion Years Bookstore","ck":"","ce":"","sp":1,"ob":"B472"},{"no":425,"booth":"B400","ko":"","en":"Nanarokusha Publishing","ck":"","ce":"","sp":1,"ob":"B472"},{"no":426,"booth":"B400","ko":"","en":"rn press INC.","ck":"","ce":"","sp":1,"ob":"B472"},{"no":427,"booth":"B400","ko":"","en":"Seki Shobo","ck":"","ce":"","sp":1,"ob":"B472"},{"no":428,"booth":"B400","ko":"","en":"Shinyodo","ck":"","ce":"","sp":1,"ob":"B472"},{"no":429,"booth":"B400","ko":"","en":"Shoshikankanbou","ck":"","ce":"","sp":1,"ob":"B472"},{"no":430,"booth":"B400","ko":"","en":"Tababooks","ck":"","ce":"","sp":1,"ob":"B472"},{"no":431,"booth":"B400","ko":"","en":"The Editorial Department Inc.","ck":"","ce":"","sp":1,"ob":"B472"},{"no":432,"booth":"B400","ko":"","en":"Troublemakers Publishing","ck":"","ce":"","sp":1,"ob":"B472"},{"no":433,"booth":"B400","ko":"","en":"Tsumujikaze-sha","ck":"","ce":"","sp":1,"ob":"B472"},{"no":434,"booth":"B400","ko":"","en":"Thing Books Pte Ltd","ck":"","ce":"","sp":1,"ob":"B473"},{"no":435,"booth":"B400","ko":"","en":"THEBOOKSHOW","ck":"","ce":"","sp":1,"ob":"B473"},{"no":436,"booth":"B400","ko":"","en":"Thumb Books","ck":"","ce":"","sp":1,"ob":"B473"}];
+const BLOCK_GRID = {"A10": [["A1001", "A1002"]], "A1": [["A104", "A108", "A112"], ["A103", "A107", "A111"], ["A102", "A106", "A110"], ["A101", "A105", "A109"]], "A11": [["A1101", "A1102", "A1103"]], "A12": [[null, "A1207"], [null, "A1206"], [null, "A1205"], ["A1202", "A1204"], [null, "A1203"]], "A13": [["A1304", "A1308", "A1311"], ["A1303", "A1307", "A1310"], ["A1302", "A1306", null], [null, null, "A1309"], ["A1301", "A1305", null]], "A14": [["A1404", null, null, null], ["A1403", "A1406", "A1408", "A1410"], ["A1402", "A1405", "A1407", "A1409"], ["A1401", null, null, null]], "A15": [["A1502", null], [null, "A1503"], ["A1501", null]], "A16": [["A1601", "A1602"]], "A17": [["A1701", "A1702", "A1703"]], "A18": [["A1802", null, null], [null, "A1803", null], ["A1801", null, "A1804"]], "A20": [["A2004", "A2008", null], [null, null, "A2010"], ["A2003", "A2007", null], ["A2002", "A2006", null], ["A2001", "A2005", null]], "A2": [["A204", null, null, null], ["A203", "A206", "A208", "A210"], ["A202", "A205", "A207", "A209"], ["A201", null, null, null]], "A21": [["A2102", null], [null, "A2103"], ["A2101", null]], "A22": [["A2201", "A2202", "A2203"]], "A23": [["A2301", "A2302", "A2303"]], "A3": [["A302", "A304", "A306", "A308"], ["A301", "A303", "A305", "A307"]], "A4": [["A402", null], [null, "A403"], ["A401", null]], "A5": [["A501", "A502", "A503"]], "A7": [["A704", "A707", null], ["A703", null, "A709"], [null, "A706", null], ["A702", null, null], ["A701", "A705", "A708"]], "A8": [["A804", "A802", "A808"], ["A801", "A805", "A807"], [null, "A806", null]], "A9": [["A902", null], [null, "A903"], ["A901", null]], "B1": [["B103", "B106", "B109"], ["B102", "B105", "B108"], ["B101", "B104", "B107"]], "B2": [["B203", "B206"], ["B202", "B205"], ["B201", "B204"]], "B3": [[null, "B303", "B306", null], [null, "B302", "B305", "B308"], ["B309", "B301", "B304", "B307"]], "B5": [["B503", "B505"], ["B501", "B504"], [null, "B506"], ["B502", null]], "B6": [[null, "B605", "B608", null], ["B602", null, "B607", null], [null, "B604", "B606", "B609"], ["B601", null, "B603", null]]};
+
+/* ============ derive ============ */
+const EX = RAW.filter(r=>r.booth.indexOf("Ticket")!==0).map(r=>({
+  no:r.no, booth:r.booth,
+  ko:r.ko, en:r.en,
+  country:(r.ck||r.ce||"대한민국"),
+  ce:r.ce, sp:r.sp, ob:r.ob,
+  name:(r.ko&&r.ko.length)?r.ko:r.en,
+  searchKey:(r.ko+" "+r.en+" "+r.booth+" "+(r.ob||"")+" "+(r.ck||"")+" "+(r.ce||"대한민국")).toLowerCase()
+}));
+const byBooth={};
+EX.forEach(e=>{ (byBooth[e.booth]=byBooth[e.booth]||[]).push(e); });
+
+/* favorites storage (localStorage w/ in-memory fallback for sandboxed iframes) */
+const FavStore=(()=>{
+  let mem={}; let ok=false;
+  try{ const k="__t"; localStorage.setItem(k,"1"); localStorage.removeItem(k); ok=true; }catch(e){ ok=false; }
+  const KEY="sibf2026_favs";
+  function read(){ if(ok){ try{ return JSON.parse(localStorage.getItem(KEY)||"{}"); }catch(e){ return {}; } } return mem; }
+  function write(o){ if(ok){ try{ localStorage.setItem(KEY,JSON.stringify(o)); }catch(e){} } else { mem=o; } }
+  return {read,write};
+})();
+let favs=FavStore.read(); // {no:true}
+function isFav(no){ return !!favs[no]; }
+function toggleFav(no){ if(favs[no]) delete favs[no]; else favs[no]=1; FavStore.write(favs); }
+function favCount(){ return Object.keys(favs).length; }
+
+/* country -> short flag-ish label */
+const CFLAG={ "대한민국":"KOR","타이완":"TWN","태국":"THA","미국":"USA","칠레":"CHL","중국":"CHN","캐나다":"CAN","영국":"GBR","독일":"DEU","프랑스":"FRA","일본":"JPN","싱가포르":"SGP" };
+function flagOf(e){ return CFLAG[e.country]||e.country; }
+function isIntl(e){ return e.country!=="대한민국"; }
+
+/* ============ block layout (mirrors PDF floor plan) ============ */
+function blockOf(booth){
+  if(booth.indexOf("Ticket")===0) return booth;
+  const m=booth.match(/^([A-Z])(\d+)(\d\d)$/);
+  if(!m) return booth;
+  return m[1]+m[2];
+}
+function blockLabel(blk){
+  if(INFO_BLOCKS[blk]) return blk.indexOf("_A")>0?"A홀 인포":"B1홀 인포";
+  if(byBooth[blk]){ const lead=byBooth[blk][0]; return (lead.name||blk); } // exact special booth → its name
+  const m=blk.match(/^([A-Z])(\d+)$/);
+  return m? m[1]+m[2]+"00" : blk;
+}
+/* category per booth (special facilities) */
+function catOf(e){
+  const b=e.booth;
+  if(b.indexOf("Ticket")===0) return "info";          // 인포데스크
+  if(b==="B400") return "vil";                         // 책마을
+  if(b==="B701") return "cafe";                        // 커피 리브레
+  if(b==="B702"||b==="B703") return "ex";              // 라운지/주제전시
+  if(/Readers Hall|책만남홀/.test(e.name)||b==="B704") return "lec";
+  if(e.sp) return "lec";
+  return "";
+}
+/* macro layout: ordered rows of block-codes per hall.
+   Entries can be a block prefix (e.g. "A12") OR an exact booth id (e.g. "B701"). */
+const HALL_B_TOP=[
+  ["B701","B702","B703","B704","B7extra"],   // B700 area — B7extra(705/706/707) right of 책마당 B704
+  ["B400","B5","B6"]                          // B500 · B600 area
+];
+const HALL_B_BOTTOM=["B1","B2","B3"];
+const HALL_A=[
+  ["A19","A20","A21","A22","A23","A24"],
+  ["A13","A14","A15","A16","A17","A18"],
+  ["A7","A8","A9","A10","A11","A12"],
+  ["A1","A2","A3","A4","A5","A6"]
+];
+/* booths that belong to each pseudo-block */
+function boothsInBlock(blk){
+  if(blk==="B7extra") return ["B705","B706","B707"];
+  if(byBooth[blk]) return [blk];                       // exact single booth (B400/B701..)
+  return Object.keys(byBooth).filter(b=>blockOf(b)===blk).sort(sortBooth);
+}
+const INFO_BLOCKS={};
+const SINGLE_BLOCKS={"B400":1,"B701":1,"B702":1,"B703":1,"B704":1};
+function sortBooth(a,b){
+  const pa=a.match(/(\d+)/g),pb=b.match(/(\d+)/g);
+  if(pa&&pb){ const na=+pa.join(""),nb=+pb.join(""); if(na!==nb) return na-nb; }
+  return a<b?-1:1;
+}
+
+/* ============ state ============ */
+let view="list";
+let query="";
+let filter="all"; // all | fav | intl
+let selectedBooth=null;
+
+/* ============ LIST render ============ */
+const listView=document.getElementById("listView");
+const countSum=document.getElementById("countSum");
+
+function matchQuery(e){ return !query || e.searchKey.indexOf(query)>=0; }
+function passFilter(e){
+  if(filter==="fav") return isFav(e.no);
+  if(filter==="intl") return isIntl(e);
+  return true;
+}
+function hl(text){
+  if(!query||!text) return escapeHtml(text);
+  const i=text.toLowerCase().indexOf(query);
+  if(i<0) return escapeHtml(text);
+  return escapeHtml(text.slice(0,i))+"<mark>"+escapeHtml(text.slice(i,i+query.length))+"</mark>"+escapeHtml(text.slice(i+query.length));
+}
+function escapeHtml(s){ return (s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+
+function renderList(){
+  const items=EX.filter(e=>matchQuery(e)&&passFilter(e));
+  // group by hall (A / B1) then sort by booth
+  const groups={A:[],B:[]};
+  items.forEach(e=>{ (e.booth[0]==="B"?groups.B:groups.A).push(e); });
+  let html="";
+  const order=[["A","Hall A"],["B","Hall B1"]];
+  let shown=0;
+  order.forEach(([k,label])=>{
+    const arr=groups[k].sort((x,y)=>sortBooth(x.booth,y.booth)||x.no-y.no);
+    if(!arr.length) return;
+    shown+=arr.length;
+    html+=`<div class="grouphd">${label}<span class="n">${arr.length}</span></div>`;
+    arr.forEach(e=>{
+      const fav=isFav(e.no);
+      const enLine=(e.ko&&e.en&&e.ko!==e.en)?`<span class="en">${hl(e.en)}</span>`:"";
+      const intl=isIntl(e)?`<span class="flag">${flagOf(e)}</span>`:"";
+      html+=`<div class="row" data-booth="${e.booth}">
+        <div class="info">
+          <div class="nm">${hl(e.name)}</div>
+          <div class="meta">${intl}${enLine}</div>
+        </div>
+        <button class="booth" data-locate="${e.booth}">${e.booth.replace("Ticket-Info_","INFO ")}</button>
+        <button class="star-btn ${fav?"on":""}" data-fav="${e.no}" aria-label="즐겨찾기">${fav?"★":"☆"}</button>
+      </div>`;
+    });
+  });
+  if(!shown){
+    const msg=filter==="fav"?["즐겨찾기가 비어 있어요","별표를 눌러 관심 부스를 저장하세요"]:["검색 결과가 없습니다","다른 이름이나 부스번호로 검색해 보세요"];
+    html=`<div class="empty"><div class="big">${msg[0]}</div><div class="sm">${msg[1]}</div></div>`;
+  }
+  listView.innerHTML=html;
+  countSum.textContent=shown?`${shown}개 참가사 표시 중 · 총 ${EX.length}개`:"";
+}
+
+/* chips */
+const chipsEl=document.getElementById("chips");
+function renderChips(){
+  const fc=favCount();
+  chipsEl.innerHTML=`
+    <button class="chip ${filter==="all"?"on":""}" data-f="all">전체 <span style="opacity:.6">${EX.length}</span></button>
+    <button class="chip fav ${filter==="fav"?"on":""}" data-f="fav"><span class="star">★</span>즐겨찾기 ${fc?`<span style="opacity:.7">${fc}</span>`:""}</button>
+    <button class="chip ${filter==="intl"?"on":""}" data-f="intl">해외관 <span style="opacity:.6">${EX.filter(isIntl).length}</span></button>`;
+}
+chipsEl.addEventListener("click",e=>{
+  const b=e.target.closest(".chip"); if(!b) return;
+  filter=b.dataset.f; renderChips(); renderList();
+});
+
+/* list interactions */
+listView.addEventListener("click",e=>{
+  const fb=e.target.closest("[data-fav]");
+  if(fb){ toggleFav(+fb.dataset.fav); renderChips(); renderList(); paintCells(); return; }
+  const loc=e.target.closest("[data-locate]");
+  if(loc){ goToBoothOnMap(loc.dataset.locate); return; }
+  const row=e.target.closest(".row");
+  if(row&&row.dataset.booth){ openSheet(row.dataset.booth); }
+});
+
+/* ============ MAP render ============ */
+const mapCanvas=document.getElementById("mapCanvas");
+function cellHtml(booth){
+  const list=byBooth[booth]||[];
+  const lead=list[0];
+  const cat=lead?catOf(lead):"";
+  const hasFav=list.some(x=>isFav(x.no));
+  const nm=lead?(lead.name||booth):booth;
+  const cls=["cell"];
+  if(cat) cls.push("cat-"+cat);
+  if(list.length>1) cls.push("multi");
+  return `<div class="${cls.join(" ")}" data-booth="${booth}" data-c="${list.length}">
+    ${hasFav?'<span class="fstar">★</span>':''}
+    <span class="id">${booth.indexOf("Ticket")===0?"i":booth}</span>
+    <span class="nm">${escapeHtml(nm)}</span>
+  </div>`;
+}
+function blockHtml(blk){
+  const booths=boothsInBlock(blk);
+  if(!booths.length) return "";
+  const isVil=blk==="B400";
+  const isInfo=!!INFO_BLOCKS[blk];
+  const isSingle=!!SINGLE_BLOCKS[blk]&&!isVil;
+  const cls=["blk"];
+  if(isVil) cls.push("village");
+  if(isInfo) cls.push("info");
+  if(isSingle) cls.push("single");
+  const cnt=isVil?booths.reduce((s,b)=>s+(byBooth[b]||[]).length,0):booths.length;
+  const cntTag=(isInfo||isSingle)?"":`<span class="cnt">${cnt}</span>`;
+  return `<div class="${cls.join(" ")}">
+    <div class="blk-hd"><span class="lbl">${escapeHtml(blockLabel(blk))}</span>${cntTag}</div>
+    <div class="cells">${booths.map(cellHtml).join("")}</div>
+  </div>`;
+}
+function rowHtml(codes){
+  const cells=codes.map(blockHtml).filter(Boolean).join("");
+  return cells?`<div class="fp-row">${cells}</div>`:"";
+}
+function buildMap(){
+  let h="";
+  // ---- Hall B1 ----
+  h+=`<div class="hall"><div class="hall-title"><span class="dot"></span>Hall B1</div>`;
+  h+=`<div class="fp-split">`;
+  h+=`<div class="fp-main">`;
+  HALL_B_TOP.forEach(r=>h+=rowHtml(r));
+  h+=`</div>`;
+  // B1홀 출입구 — 우측, B700·B600 행에 걸쳐 세로로 배치
+  h+=`<div class="fp-gate-v">B1홀<br>출입구<span class="en">Hall B1<br>Entrance & Exit</span><span class="arr">▶</span></div>`;
+  h+=`</div>`;
+  h+=rowHtml(HALL_B_BOTTOM);
+  h+=`</div>`;
+  // ---- Hall A ----
+  h+=`<div class="hall"><div class="hall-title"><span class="dot"></span>Hall A</div>`;
+  HALL_A.forEach(r=>h+=rowHtml(r));
+  // A홀 출입구 — 하단, A500·A600 아래(우측)
+  // A홀 출구(A200·A300 아래) / A홀 입구(A500·A600 아래)
+  h+=`<div class="fp-row">`
+    +`<div class="fp-spacer"></div>`
+    +`<div class="gate gate-exit"><span class="arr">▼</span> A홀 출구 · Exit</div>`
+    +`<div class="fp-spacer"></div>`
+    +`<div class="gate gate-enter">A홀 입구 · Entrance <span class="arr">▲</span></div>`
+    +`</div>`;
+  h+=`</div>`;
+  mapCanvas.innerHTML=h;
+}
+function paintCells(){
+  document.querySelectorAll(".cell").forEach(c=>{
+    const list=byBooth[c.dataset.booth]||[];
+    const f=list.some(x=>isFav(x.no));
+    let s=c.querySelector(".fstar");
+    if(f&&!s){ s=document.createElement("span"); s.className="fstar"; s.textContent="★"; c.prepend(s); }
+    if(!f&&s){ s.remove(); }
+  });
+}
+function applyMapSearch(){
+  let firstHit=null;
+  document.querySelectorAll(".cell").forEach(c=>{
+    const list=byBooth[c.dataset.booth]||[];
+    const hit= query && list.some(e=>e.searchKey.indexOf(query)>=0);
+    c.classList.toggle("hit",!!hit);
+    if(hit&&!firstHit) firstHit=c;
+  });
+  return firstHit;
+}
+
+/* ============ pan / zoom ============ */
+const stage=document.getElementById("mapStage");
+let scale=1,tx=0,ty=0,baseScale=1;
+function applyTransform(){ mapCanvas.style.transform=`translate(${tx}px,${ty}px) scale(${scale})`; }
+function fitMap(){
+  const cw=mapCanvas.scrollWidth||mapCanvas.offsetWidth;
+  const ch=mapCanvas.scrollHeight||mapCanvas.offsetHeight;
+  const sw=stage.clientWidth, sh=stage.clientHeight;
+  if(!cw||!ch) return;
+  baseScale=Math.min(sw/cw, 1); // fit width, don't upscale
+  scale=baseScale;
+  tx=(sw-cw*scale)/2; if(tx<0) tx=0;
+  ty=12;
+  applyTransform();
+}
+function clamp(){
+  const cw=mapCanvas.offsetWidth*scale, ch=mapCanvas.offsetHeight*scale;
+  const sw=stage.clientWidth, sh=stage.clientHeight;
+  const minx=Math.min(0,sw-cw-20), maxx= cw<sw? (sw-cw)/2 : 20;
+  const miny=Math.min(0,sh-ch-20), maxy= ch<sh? (sh-ch)/2 : 20;
+  tx=Math.max(minx,Math.min(maxx,tx));
+  ty=Math.max(miny,Math.min(maxy,ty));
+}
+function zoomBy(f,cx,cy){
+  const sw=stage.clientWidth, sh=stage.clientHeight;
+  cx=cx??sw/2; cy=cy??sh/2;
+  const ns=Math.max(baseScale*0.9,Math.min(4,scale*f));
+  const k=ns/scale;
+  tx=cx-(cx-tx)*k; ty=cy-(cy-ty)*k; scale=ns;
+  clamp(); applyTransform();
+}
+document.getElementById("zoomIn").onclick=()=>zoomBy(1.4);
+document.getElementById("zoomOut").onclick=()=>zoomBy(1/1.4);
+document.getElementById("zoomReset").onclick=()=>{ fitMap(); };
+
+/* pointer pan + pinch */
+let pts=new Map(),lastDist=0,lastMid=null,moved=false,downT=0,downEl=null;
+stage.addEventListener("pointerdown",e=>{
+  stage.setPointerCapture(e.pointerId);
+  pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  moved=false; downT=Date.now();
+  // setPointerCapture가 이후 이벤트의 target을 stage로 고정하므로,
+  // 탭한 셀은 pointerdown 시점의 실제 target에서 미리 잡아 둔다.
+  downEl=e.target;
+  if(pts.size===2){ const a=[...pts.values()]; lastDist=dist(a[0],a[1]); lastMid=mid(a[0],a[1]); }
+});
+stage.addEventListener("pointermove",e=>{
+  if(!pts.has(e.pointerId)) return;
+  const prev=pts.get(e.pointerId);
+  pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if(pts.size===1){
+    const dx=e.clientX-prev.x, dy=e.clientY-prev.y;
+    if(Math.abs(dx)+Math.abs(dy)>3) moved=true;
+    tx+=dx; ty+=dy; clamp(); applyTransform();
+  } else if(pts.size===2){
+    moved=true;
+    const a=[...pts.values()]; const d=dist(a[0],a[1]), m=mid(a[0],a[1]);
+    const r=stage.getBoundingClientRect();
+    if(lastDist){ const f=d/lastDist; const cx=m.x-r.left, cy=m.y-r.top;
+      const ns=Math.max(baseScale*0.9,Math.min(4,scale*f)); const k=ns/scale;
+      tx=cx-(cx-tx)*k; ty=cy-(cy-ty)*k; scale=ns; clamp(); applyTransform();
+    }
+    lastDist=d; lastMid=m;
+  }
+});
+function endPt(e){ pts.delete(e.pointerId); if(pts.size<2) lastDist=0; }
+stage.addEventListener("pointerup",e=>{
+  const quick=Date.now()-downT<400;
+  endPt(e);
+  if(!moved&&quick){
+    let c=(downEl&&downEl.closest)?downEl.closest(".cell"):null;
+    if(!c){ const el=document.elementFromPoint(e.clientX,e.clientY); c=(el&&el.closest)?el.closest(".cell"):null; }
+    if(c) openSheet(c.dataset.booth);
+  }
+  downEl=null;
+});
+stage.addEventListener("pointercancel",endPt);
+stage.addEventListener("wheel",e=>{ e.preventDefault(); const r=stage.getBoundingClientRect(); zoomBy(e.deltaY<0?1.12:1/1.12,e.clientX-r.left,e.clientY-r.top); },{passive:false});
+function dist(a,b){ return Math.hypot(a.x-b.x,a.y-b.y); }
+function mid(a,b){ return {x:(a.x+b.x)/2,y:(a.y+b.y)/2}; }
+
+/* locate a booth: switch to map, center & select */
+function goToBoothOnMap(booth){
+  switchView("map");
+  setTimeout(()=>{
+    const cell=document.querySelector('.cell[data-booth="'+CSS.escape(booth)+'"]');
+    if(!cell){ return; }
+    document.querySelectorAll(".cell.sel").forEach(c=>c.classList.remove("sel"));
+    cell.classList.add("sel");
+    // center on cell
+    const sw=stage.clientWidth, sh=stage.clientHeight;
+    scale=Math.min(2.2, Math.max(baseScale*1.6, 1.6));
+    const cx=cell.offsetLeft+cell.offsetWidth/2, cy=cell.offsetTop+cell.offsetHeight/2;
+    tx=sw/2-cx*scale; ty=sh/2.6-cy*scale;
+    clamp(); applyTransform();
+    showHint(booth+" 위치");
+    setTimeout(()=>openSheet(booth),420);
+  },80);
+}
+const mapHint=document.getElementById("mapHint");
+let hintT;
+function showHint(t){ mapHint.textContent=t; mapHint.classList.add("show"); clearTimeout(hintT); hintT=setTimeout(()=>mapHint.classList.remove("show"),1800); }
+
+/* ============ bottom sheet ============ */
+const sheet=document.getElementById("sheet"),sheetBg=document.getElementById("sheetBg");
+/* ============ zone mini-map (shown in map-context modal) ============ */
+function zoneTileLabel(c){
+  if(c==="B7extra") return "B700";
+  if(byBooth[c]){ const m={"B400":"책마을","B701":"카페","B702":"라운지","B703":"주제전시","B704":"책마당"}; return m[c]||c; }
+  return blockLabel(c);
+}
+function zoneMapHtml(booth){
+  const isB=booth[0]==="B";
+  const rows=isB?[...HALL_B_TOP,HALL_B_BOTTOM]:HALL_A;
+  const hallName=isB?"Hall B1":"Hall A";
+  let myCode=null;
+  rows.forEach(r=>r.forEach(c=>{ if(boothsInBlock(c).indexOf(booth)>=0) myCode=c; }));
+  let grid="";
+  rows.forEach(r=>{
+    grid+=`<div class="zrow">`+r.map(c=>{
+      const me=c===myCode;
+      return `<div class="ztile${me?" me":""}">${escapeHtml(zoneTileLabel(c))}</div>`;
+    }).join("")+`</div>`;
+  });
+  const cap=isB
+    ? `<div class="zcap">우측 <span class="arr">▶</span> B1홀 출입구</div>`
+    : `<div class="zcap">하단 <span class="arr">▼</span> 출구 A200·A300 &nbsp;|&nbsp; 입구 A500·A600 <span class="arr">▲</span></div>`;
+  // 이 구역의 부스 — 실제 배치(좌표 추출) 반영, 미추출 블록은 번호순
+  const zb=myCode?boothsInBlock(myCode):[booth];
+  let strip="";
+  if(zb.length>1){
+    const gridDef=(typeof BLOCK_GRID!=="undefined")?BLOCK_GRID[myCode]:null;
+    if(gridDef){
+      let rows=gridDef.map(r=>r.slice());
+      const placed=new Set([].concat(...gridDef).filter(Boolean));
+      const missing=zb.filter(b=>!placed.has(b));
+      if(missing.length) rows.push(missing);
+      const ncol=Math.max(1,...rows.map(r=>r.length));
+      let cells="";
+      rows.forEach(r=>{
+        for(let i=0;i<ncol;i++){
+          const b=r[i];
+          cells+= b?`<button class="zb${b===booth?" sel":""}" data-zb="${b}">${b}</button>`:`<span class="zb-empty"></span>`;
+        }
+      });
+      strip=`<div class="zstrip-hd">이 구역의 부스 · ${zb.length} <span class="zhint">실제 배치</span></div>`
+        +`<div class="zgrid" style="grid-template-columns:repeat(${ncol},minmax(0,1fr))">${cells}</div>`;
+    } else {
+      strip=`<div class="zstrip-hd">이 구역의 부스 · ${zb.length}</div><div class="zstrip">`
+        +zb.map(b=>`<button class="zb${b===booth?" sel":""}" data-zb="${b}">${b}</button>`).join("")
+        +`</div>`;
+    }
+  }
+  return `<div class="zone">
+    <div class="zhd">구역 위치 ZONE <b>${escapeHtml(blockLabel(myCode||booth))} · ${hallName}</b></div>
+    <div class="zmap">${grid}</div>${cap}${strip}
+  </div><div class="zone-div"></div>`;
+}
+
+function openSheet(booth){
+  const list=(byBooth[booth]||[]).slice().sort((a,b)=>a.no-b.no);
+  if(!list.length) return;
+  selectedBooth=booth;
+  document.querySelectorAll(".cell.sel").forEach(c=>c.classList.remove("sel"));
+  const cell=document.querySelector('.cell[data-booth="'+CSS.escape(booth)+'"]');
+  if(cell) cell.classList.add("sel");
+  document.getElementById("sheetCode").textContent=booth.indexOf("Ticket")===0?"INFO":booth;
+  const lead=list[0];
+  const cat=catOf(lead);
+  const catName={vil:"책마을 · Book Village",cafe:"카페",ex:"전시/라운지",lec:"강연·홀"}[cat];
+  document.getElementById("sheetTitle").textContent= list.length>1?`참가사 ${list.length}곳`:(lead.name||booth);
+  document.getElementById("sheetSub").textContent= catName || (list.length>1?byBooth[booth][0].country:`${lead.country} · ${lead.en||""}`);
+  let body="";
+  body+=zoneMapHtml(booth);
+  list.forEach(e=>{
+    const fav=isFav(e.no);
+    const intl=isIntl(e)?`<span class="flag">${flagOf(e)}</span> `:"";
+    const en=(e.en&&e.en!==e.name)?`<div class="en">${escapeHtml(e.en)}</div>`:(e.en&&!e.ko?`<div class="en">${e.country}</div>`:"");
+    const orig=e.ob&&e.ob!==e.booth?`<div class="en" style="color:var(--info)">원래 부스 ${e.ob}</div>`:"";
+    body+=`<div class="srow">
+      <div class="info"><div class="nm">${intl}${escapeHtml(e.name||e.en)}</div>${en}${orig}</div>
+      <button class="star-btn ${fav?"on":""}" data-fav="${e.no}">${fav?"★":"☆"}</button>
+    </div>`;
+  });
+  document.getElementById("sheetBody").innerHTML=body;
+  // 목록에서 열면 '지도에서 보기' 노출, 지도에서 열면 생략
+  sheet.classList.toggle("from-map", view==="map");
+  sheetBg.classList.add("show"); sheet.classList.add("show");
+}
+function closeSheet(){ sheet.classList.remove("show"); sheetBg.classList.remove("show");
+  document.querySelectorAll(".cell.sel").forEach(c=>c.classList.remove("sel")); selectedBooth=null; }
+sheetBg.onclick=closeSheet;
+document.getElementById("sheetClose").onclick=closeSheet;
+// '지도에서 보기' — 지도 검색결과와 동일하게 해당 부스로 이동·강조
+document.getElementById("sheetLocate").onclick=()=>{
+  const booth=selectedBooth;
+  if(!booth) return;
+  closeSheet();
+  goToBoothOnMap(booth);
+};
+document.getElementById("sheetBody").addEventListener("click",e=>{
+  const zb=e.target.closest("[data-zb]");
+  if(zb){ openSheet(zb.dataset.zb); return; }
+  const fb=e.target.closest("[data-fav]"); if(!fb) return;
+  const no=+fb.dataset.fav; toggleFav(no);
+  fb.classList.toggle("on"); fb.textContent=isFav(no)?"★":"☆";
+  renderChips(); if(view==="list") renderList(); paintCells();
+});
+
+/* ============ view switching ============ */
+function switchView(v){
+  view=v;
+  document.getElementById("seg").classList.toggle("map",v==="map");
+  document.getElementById("segList").classList.toggle("on",v==="list");
+  document.getElementById("segMap").classList.toggle("on",v==="map");
+  const listScroll=document.getElementById("listScroll");
+  const mapView=document.getElementById("mapView");
+  chipsEl.style.display=v==="list"?"flex":"none";
+  countSum.style.display=v==="list"?"block":"none";
+  document.getElementById("searchInput").placeholder=v==="map"?"부스·출판사 검색 후 지도에서 찾기":"출판사 · 부스번호 · 국가 검색";
+  if(v==="map"){
+    listScroll.classList.add("hide"); mapView.classList.add("show");
+    if(!mapCanvas.innerHTML){ buildMap(); }
+    requestAnimationFrame(()=>{ fitMap(); paintCells(); applyMapSearch(); });
+  } else {
+    listScroll.classList.remove("hide"); mapView.classList.remove("show");
+    renderList();
+  }
+}
+document.getElementById("segList").onclick=()=>switchView("list");
+document.getElementById("segMap").onclick=()=>switchView("map");
+
+/* ============ search ============ */
+const searchInput=document.getElementById("searchInput");
+const searchBox=document.getElementById("searchBox");
+let composing=false, searchTimer=null;
+function runSearch(){
+  query=searchInput.value.trim().toLowerCase();
+  if(view==="list"){ renderList(); }
+  else { applyMapSearch(); }
+}
+function scheduleSearch(){
+  clearTimeout(searchTimer);
+  searchTimer=setTimeout(runSearch,70);
+}
+searchInput.addEventListener("compositionstart",()=>{ composing=true; });
+searchInput.addEventListener("compositionend",()=>{ composing=false; runSearch(); });
+searchInput.addEventListener("input",e=>{
+  searchBox.classList.toggle("has",!!searchInput.value);
+  // 한글 조합(IME) 중에는 리스트를 다시 그리지 않는다 — 조합 중 동기 DOM 갱신이
+  // 마지막 글자 중복 입력을 유발하므로 compositionend 시점에만 갱신한다.
+  if(composing || e.isComposing) return;
+  scheduleSearch();
+});
+searchInput.addEventListener("keydown",e=>{
+  if(e.key==="Enter"&&view==="map"&&!e.isComposing){
+    runSearch();
+    const hit=applyMapSearch();
+    if(hit){ goToBoothOnMap(hit.dataset.booth); searchInput.blur(); }
+  }
+});
+document.getElementById("searchClear").onclick=()=>{
+  searchInput.value=""; query=""; searchBox.classList.remove("has");
+  if(view==="list") renderList(); else applyMapSearch();
+  searchInput.focus();
+};
+
+/* legend collapse */
+document.getElementById("legendHd").onclick=()=>{
+  const lg=document.getElementById("legend"); lg.classList.toggle("collapsed");
+  document.getElementById("legendTg").textContent=lg.classList.contains("collapsed")?"▸":"▾";
+};
+
+window.addEventListener("resize",()=>{ if(view==="map") fitMap(); });
+
+/* ============ init ============ */
+renderChips();
+renderList();
+</script>
+</body>
+</html>
