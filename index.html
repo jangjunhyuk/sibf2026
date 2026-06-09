@@ -72,7 +72,7 @@ header{padding:16px 16px 0;background:var(--bg);position:relative;}
 .search{display:flex;align-items:center;gap:10px;background:var(--surface2);border-radius:9999px;padding:0 18px;height:48px;box-shadow:inset 0 0 0 1px transparent;transition:box-shadow .2s;}
 .search:focus-within{box-shadow:inset 0 0 0 1px var(--text);}
 .search svg{width:18px;height:18px;color:var(--text2);flex:0 0 auto;}
-.search input{flex:1;border:none;background:none;outline:none;font-size:15px;color:var(--text);min-width:0;font-weight:500;}
+.search input{flex:1;border:none;background:none;outline:none;font-size:16px;color:var(--text);min-width:0;font-weight:500;}
 .search input::placeholder{color:var(--text2);}
 .search input[type=search]::-webkit-search-cancel-button,
 .search input[type=search]::-webkit-search-decoration{-webkit-appearance:none;appearance:none;display:none;}
@@ -471,9 +471,18 @@ function renderChips(){
     <button class="chip fav ${filter==="fav"?"on":""}" data-f="fav"><span class="star">★</span>즐겨찾기 ${fc?`<span style="opacity:.7">${fc}</span>`:""}</button>
     <button class="chip ${filter==="intl"?"on":""}" data-f="intl">해외관 <span style="opacity:.6">${EX.filter(isIntl).length}</span></button>`;
 }
+// iOS 관성 스크롤 중 콘텐츠가 바뀌면 짧은 목록이 화면 밖으로 밀려 보이지 않는 문제 방지:
+// overflow를 잠깐 껐다 켜 관성 스크롤을 멈추고 맨 위로 되돌린다.
+function resetListScroll(){
+  const sc=document.getElementById("listScroll");
+  if(!sc) return;
+  sc.style.overflowY="hidden";
+  sc.scrollTop=0;
+  requestAnimationFrame(()=>{ sc.style.overflowY=""; });
+}
 chipsEl.addEventListener("click",e=>{
   const b=e.target.closest(".chip"); if(!b) return;
-  filter=b.dataset.f; renderChips(); renderList();
+  filter=b.dataset.f; renderChips(); renderList(); resetListScroll();
 });
 
 /* list interactions */
@@ -660,6 +669,7 @@ function goToBoothOnMap(booth){
     if(!cell){ return; }
     document.querySelectorAll(".cell.sel").forEach(c=>c.classList.remove("sel"));
     cell.classList.add("sel");
+    selectedBooth=booth;
     // center on cell
     const sw=stage.clientWidth, sh=stage.clientHeight;
     scale=Math.min(2.2, Math.max(baseScale*1.6, 1.6));
@@ -667,7 +677,7 @@ function goToBoothOnMap(booth){
     tx=sw/2-cx*scale; ty=sh/2.6-cy*scale;
     clamp(); applyTransform();
     showHint(booth+" 위치");
-    setTimeout(()=>openSheet(booth),420);
+    // 모달은 열지 않는다 — 색상·줌으로만 강조 (지도 검색 결과와 동일)
   },80);
 }
 const mapHint=document.getElementById("mapHint");
@@ -809,7 +819,7 @@ const searchBox=document.getElementById("searchBox");
 let composing=false, searchTimer=null;
 function runSearch(){
   query=searchInput.value.trim().toLowerCase();
-  if(view==="list"){ renderList(); }
+  if(view==="list"){ renderList(); resetListScroll(); }
   else { applyMapSearch(); }
 }
 function scheduleSearch(){
@@ -834,7 +844,7 @@ searchInput.addEventListener("keydown",e=>{
 });
 document.getElementById("searchClear").onclick=()=>{
   searchInput.value=""; query=""; searchBox.classList.remove("has");
-  if(view==="list") renderList(); else applyMapSearch();
+  if(view==="list"){ renderList(); resetListScroll(); } else applyMapSearch();
   searchInput.focus();
 };
 
